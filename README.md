@@ -1,2 +1,2 @@
-# Project-Lion-s-Pawprints
-Project Lion's Pawprints - Safari Tales
+# Project Lion's Pawprints - Safari Tales
+An idea for Defence project for Softuni's Angular February 2024 course.
