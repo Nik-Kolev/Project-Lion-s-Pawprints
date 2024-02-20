@@ -19,23 +19,24 @@ userController.post('/login', isGuest, async (req, res) => {
         }
     });
     if (errors.length > 0) {
-        return res.status(400).json(errors);
+        return res.status(400).json({ error: errors, code: 'INVALID_INPUT' });
     }
 
     try {
         const user = await userModel.findOne({ email });
 
         if (!user) {
-            return res.status(404).json('Имейлът или паролата са невалидни.')
+            return res.status(401).json({ error: 'Email or Password are invalid', code: 'INVALID_CREDENTIALS' });
         }
 
         const isValid = await bcrypt.compare(password, user.password)
 
         if (!isValid) {
-            return res.status(404).json('Имейлът или паролата са невалидни.')
+            return res.status(401).json({ error: 'Email or Password are invalid', code: 'INVALID_CREDENTIALS' });
         }
 
         const token = await tokenCreator(user)
+        //TODO rework the needed data for the project!
         const data = { firstName: user.firstName, lastName: user.lastName, _id: user._id, email: user.email, phoneNumber: user.phoneNumber, address: user.address, admin: user.admin, token }
         res.status(200).json(data);
     } catch (error) {
@@ -56,23 +57,23 @@ userController.post('/register', isGuest, async (req, res) => {
     });
 
     if (errors.length > 0) {
-        return res.status(400).json(errors);
+        return res.status(400).json({ error: errors, code: 'INVALID_INPUT' });
     }
 
     try {
 
         if (password !== rePass) {
-            return res.status(404).json('Паролите не съвпадат.')
+            return res.status(401).json({ error: 'Passwords do not match.', code: 'PASSWORD_MISMATCH' });
         }
 
         const user = await userModel.exists({ email })
 
         if (user) {
-            return res.status(409).json('Имейлът е вече зает.')
+            return res.status(409).json({ error: 'Email is already registered.', code: 'EMAIL_CONFLICT' });
         }
 
         const hashedPass = await bcrypt.hash(password, 10)
-
+        //TODO same as above, rework the model
         const newUser = await userModel.create({ firstName, lastName, email, phoneNumber, password: hashedPass });
 
         const token = await tokenCreator(newUser)
@@ -86,11 +87,10 @@ userController.post('/register', isGuest, async (req, res) => {
 });
 
 userController.post('/logout', (req, res) => {
-    //Simple check if there is a token - blacklist or other shit I don`t know is needed for further implementation xD
     if (req.headers.auth) {
-        res.status(200).json('Logout successful.')
+        res.status(200).json({ message: 'Logout successful.', code: 'LOGOUT_SUCCESS' });
     } else {
-        res.status(404).json('Invalid Token!')
+        res.status(401).json({ error: 'Invalid or missing token!', code: 'INVALID_TOKEN' });
     }
 })
 
@@ -105,7 +105,7 @@ userController.post('/changeInformation', isAuthorized, async (req, res) => {
         }
     });
     if (errors.length > 0) {
-        return res.status(400).json(errors);
+        return res.status(400).json({ error: errors, code: 'INVALID_INPUT' });
     }
 
     try {
@@ -134,7 +134,7 @@ userController.post('/resetPassword', isAuthorized, async (req, res) => {
         }
     });
     if (errors.length > 0) {
-        return res.status(400).json(errors);
+        return res.status(400).json({ error: errors, code: 'INVALID_INPUT' });
     }
 
     try {
@@ -143,7 +143,7 @@ userController.post('/resetPassword', isAuthorized, async (req, res) => {
         const isValid = await bcrypt.compare(password, user.password)
 
         if (!isValid) {
-            return res.status(401).json('Невалидна парола.')
+            return res.status(401).json({ error: 'Invalid password.', code: 'INVALID_PASSWORD' });
         }
 
         const newHashedPassword = await bcrypt.hash(newPassword, 10)
@@ -153,125 +153,6 @@ userController.post('/resetPassword', isAuthorized, async (req, res) => {
         const token = await tokenCreator(updatedUser)
 
         const data = { firstName: updatedUser.firstName, lastName: updatedUser.lastName, _id: updatedUser._id, email: updatedUser.email, phoneNumber: updatedUser.phoneNumber, admin: updatedUser.admin, token }
-        res.status(200).json(data);
-    } catch (error) {
-        errorHandler(error, res, req);
-    }
-});
-
-userController.post('/liked', async (req, res) => {
-    try {
-        const { isLiked, _id, userId } = req.body
-        if (isLiked) {
-            await userModel.findByIdAndUpdate({ _id: userId }, { $pull: { likedProducts: _id } }, { new: true });
-            res.status(200).json('Продуктът е премахнат от любими.')
-        } else {
-            await userModel.findByIdAndUpdate({ _id: userId, likedProducts: { $ne: _id } }, { $push: { likedProducts: _id } }, { new: true });
-            res.status(200).json('Продуктът е добавен в любими.')
-        }
-    } catch (error) {
-        errorHandler(error, res, req)
-    }
-
-})
-
-userController.get('/liked/:id', async (req, res) => {
-    const { id } = req.params
-    const userId = req.user?._id
-    try {
-        const isLiked = !!(await userModel.exists({ _id: userId, likedProducts: id }));
-        res.status(200).json(isLiked)
-    } catch (error) {
-        errorHandler(error, res, req)
-    }
-})
-
-userController.get('/all-liked', async (req, res) => {
-    try {
-        const userId = req.user?._id;
-        const page = Number(req.query.page) || 1;
-        const limit = 9;
-        const skip = (page - 1) * limit;
-
-        const likedProducts = await userModel.findOne({ _id: userId })
-            .select({ likedProducts: 1, _id: 0 })
-            .lean()
-            .then(doc => doc.likedProducts);
-        const totalPages = Math.ceil(likedProducts.length / limit);
-        const data = {
-            products: likedProducts.slice(skip, limit + skip),
-            totalPages: totalPages
-        };
-
-        res.status(200).json(data);
-    } catch (error) {
-        errorHandler(error);
-    }
-});
-
-
-userController.post('/basket', async (req, res) => {
-    try {
-        const userId = req.user?._id
-        const { action, productId, price } = req.body
-        if (action == 'added') {
-            const product = await Product.findById(productId);
-
-            const data = {
-                item: productId,
-                price: price,
-                imageUrl: product.imageUrl,
-                productType: product.productType,
-                name: product.name
-            }
-
-            const updatedUser = await userModel.findByIdAndUpdate(
-                userId,
-                { $push: { storedProducts: data } },
-                { new: true, fields: { storedProducts: { $slice: -1 } } }
-            );
-
-            const newProduct = updatedUser.storedProducts[0];
-
-            res.status(200).json(newProduct);
-        }
-        if (action == 'remove') {
-            await userModel.findByIdAndUpdate(userId, { $pull: { storedProducts: { _id: productId } } });
-            res.status(200).json(`${productId} is ${action}d`)
-        }
-    } catch (error) {
-        errorHandler(error, res, req)
-    }
-})
-
-userController.get('/basket', async (req, res) => {
-    try {
-        const userId = req.user?._id
-        const storedProducts = await userModel.findOne({ _id: userId }).select('storedProducts');
-        res.status(200).json(storedProducts)
-    } catch (error) {
-        errorHandler(error, res, req)
-    }
-})
-
-userController.post('/addressInformation', async (req, res) => {
-    try {
-        const { _id: userId } = req.user || {};
-
-        const addressFields = ['city', 'street', 'streetNumber', 'block', 'entrance', 'floor', 'apartment', 'description'];
-        const addressUpdate = addressFields.reduce((acc, field) => {
-            if (req.body[field]) {
-                acc[`address.${field}`] = req.body[field]
-            };
-            return acc;
-        }, {});
-
-        const updatedAddressInfo = await userModel.findByIdAndUpdate(userId, { $set: addressUpdate }, { new: true });
-        const token = await tokenCreator(updatedAddressInfo);
-
-        const { firstName, lastName, email, phoneNumber, address, admin } = updatedAddressInfo;
-        const data = { firstName, lastName, _id: userId, email, phoneNumber, address, admin, token };
-
         res.status(200).json(data);
     } catch (error) {
         errorHandler(error, res, req);

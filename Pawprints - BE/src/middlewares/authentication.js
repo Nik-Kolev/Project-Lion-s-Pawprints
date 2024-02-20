@@ -10,13 +10,13 @@ module.exports.authentication = async (req, res, next) => {
                 req.user = decodedToken
                 next()
             } else {
-                return res.status(401).json({ error: 'Unauthorized' })
+                return res.status(401).json({ error: 'Unauthorized', code: 'INVALID_TOKEN' });
             }
         } catch (err) {
             console.log('Authentication Error:', err)
-            return res.status(401).json({ error: 'Unauthorized' });
+            return res.status(401).json({ error: 'Unauthorized', code: 'INVALID_TOKEN' });
         }
     } else {
-        return res.status(401).json({ error: 'Unauthorized' });
+        return res.status(401).json({ error: 'Unauthorized', code: 'INVALID_TOKEN' });
     }
 }
