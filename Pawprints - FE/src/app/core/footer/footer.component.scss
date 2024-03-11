@@ -1,0 +1,27 @@
+.footer {
+  //   margin-top: 80vh;
+  z-index: 2;
+  //   display: flex;
+  text-align: center;
+  //   align-items: center;
+  //   justify-content: center;
+  font-size: 2rem;
+  gap: 4rem;
+
+  &__list {
+    display: flex;
+    list-style: none;
+    justify-content: center;
+    gap: 2rem;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  &__links {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+  }
+}

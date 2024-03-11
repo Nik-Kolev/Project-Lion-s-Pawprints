@@ -1,0 +1,26 @@
+.main {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 25rem;
+  .img {
+    background: url("../../../assets/front.jpg") no-repeat center;
+    background-size: 100% 130%;
+    // margin-top: 3rem;
+    // width: 80%;
+    width: 100%;
+    // border-radius: 2rem;
+    height: 50rem;
+    object-fit: cover;
+  }
+
+  .carousel img {
+    background: url("../../../assets/front.jpg") no-repeat center;
+    background-size: 100% 130%;
+    // margin-top: 3rem;
+    // width: 80%;
+    width: 100%;
+    // border-radius: 2rem;
+    height: 50rem;
+    object-fit: cover;
+  }
+}
