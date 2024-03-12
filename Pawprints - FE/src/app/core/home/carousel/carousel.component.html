@@ -1,1 +1,30 @@
-<div>carousel</div>
+<div class="carousel">
+  <div
+    class="carousel__slide"
+    [ngStyle]="{
+    'background-image': 'url(' + slides[currentSlide].url + ')',
+  }"
+    [@carouselAnimation]="currentSlide"
+  >
+    <p class="carousel__paragraph">
+      {{ slides[currentSlide].description }}
+    </p>
+  </div>
+
+  <div class="carousel__indicators">
+    @for (slide of slides; track $index;) {
+    <div
+      (click)="activateSlide($index)"
+      class="carousel__indicator"
+      [ngClass]="{ active: $index === currentSlide }"
+    ></div>
+    }
+  </div>
+
+  <button (click)="previousImage()" class="carousel__previousBtn">
+    <fa-icon [icon]="faArrowLeft"></fa-icon>
+  </button>
+  <button (click)="nextImage()" class="carousel__nextBtn">
+    <fa-icon [icon]="faArrowRight"></fa-icon>
+  </button>
+</div>

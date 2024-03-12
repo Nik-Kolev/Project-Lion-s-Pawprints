@@ -1,0 +1,84 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.carousel {
+  width: 90%;
+  margin: 0 auto;
+  height: 60rem;
+  margin-top: 3rem;
+  position: relative;
+
+  &__slide {
+    top: 0;
+    left: 0;
+    margin: 0 auto;
+    width: 100%;
+    height: 100%;
+    background: center center / cover no-repeat;
+    border-radius: 10px;
+  }
+
+  &__indicators {
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    margin: 0 auto;
+    text-align: center;
+    bottom: 15px;
+  }
+
+  &__indicator {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #fff;
+    display: inline-block;
+    margin: 0px 5px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+  }
+
+  &__indicator.active {
+    background-color: var(--btn-orange);
+  }
+
+  &__indicator:hover {
+    transform: translateY(-30%);
+  }
+
+  &__nextBtn,
+  &__previousBtn {
+    position: absolute;
+    top: 50%;
+    border: 0px;
+    background-color: transparent;
+    font-size: 4rem;
+    // color: var(--btn-orange);
+    color: #d3d3d3;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+
+  &__nextBtn {
+    right: 30px;
+  }
+
+  &__previousBtn {
+    left: 30px;
+  }
+
+  &__paragraph {
+    padding: 0.5rem 1rem;
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    font-weight: 500;
+    font-size: 2.4rem;
+    color: black;
+    // color: #a05a2c;
+    background-color: #d3d3d3;
+    border-radius: 10px;
+  }
+}
