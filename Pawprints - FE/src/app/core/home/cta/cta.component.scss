@@ -1,0 +1,47 @@
+.cta {
+  text-align: center;
+  padding: 2rem 0;
+  width: 90%;
+  margin: 2rem auto;
+  background: linear-gradient(
+      -45deg,
+      rgba(0, 0, 0, 0.3) 0%,
+      rgba(0, 0, 0, 0.8) 100%
+    ),
+    url("../../../../assets/cheetah.jpg") no-repeat center / cover;
+  background-position: 100% 35%;
+  border-radius: 10px;
+  position: relative;
+  color: var(--color-grey-light-1);
+}
+
+.cta__p {
+  padding-left: 2rem;
+  position: relative;
+  font-size: 2rem;
+}
+
+.heading-primary {
+  position: relative;
+  font-size: 4rem;
+  padding-left: 2rem;
+}
+
+.cta__btn {
+  position: absolute;
+  font-size: 1.8rem;
+  bottom: 50%;
+  right: 5%;
+  transform: translateY(50%);
+
+  text-decoration: none;
+  color: #ffbf00;
+  background-color: #1a1e25;
+  border: 2px solid #ffbf00;
+  border-radius: 15px;
+  padding: 1rem 2rem;
+  font-weight: var(--fw-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+}

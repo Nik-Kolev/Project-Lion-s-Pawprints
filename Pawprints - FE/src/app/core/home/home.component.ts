@@ -1,11 +1,12 @@
 import { Slide } from './slide.interface';
 import { CarouselComponent } from './carousel/carousel.component';
 import { Component } from '@angular/core';
+import { CtaComponent } from './cta/cta.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CarouselComponent],
+  imports: [CarouselComponent, CtaComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
@@ -19,7 +20,7 @@ export class HomeComponent {
     {
       url: '../../../assets/carousel/ngorongoro-crater.jpg',
       title: 'First Slide',
-      description: 'Ngorongoro crater',
+      description: 'Ngorongoro Crater',
     },
     {
       url: '../../../assets/carousel/serengeti.jpg',

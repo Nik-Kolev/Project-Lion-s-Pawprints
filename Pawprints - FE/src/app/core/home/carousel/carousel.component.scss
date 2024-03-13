@@ -6,7 +6,7 @@
 .carousel {
   width: 90%;
   margin: 0 auto;
-  height: 60rem;
+  height: 60vh;
   margin-top: 3rem;
   position: relative;
 
@@ -18,6 +18,7 @@
     height: 100%;
     background: center center / cover no-repeat;
     border-radius: 10px;
+    filter: sepia(50%);
   }
 
   &__indicators {
@@ -33,7 +34,7 @@
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background-color: #fff;
+    background-color: var(--color-grey-light-1);
     display: inline-block;
     margin: 0px 5px;
     cursor: pointer;
@@ -41,7 +42,7 @@
   }
 
   &__indicator.active {
-    background-color: var(--btn-orange);
+    background-color: var(--color-secondary);
   }
 
   &__indicator:hover {
@@ -55,8 +56,7 @@
     border: 0px;
     background-color: transparent;
     font-size: 4rem;
-    // color: var(--btn-orange);
-    color: #d3d3d3;
+    color: var(--color-grey-light-1);
     transform: translateY(-50%);
     cursor: pointer;
   }
@@ -75,10 +75,10 @@
     bottom: 10px;
     left: 10px;
     font-weight: 500;
-    font-size: 2.4rem;
-    color: black;
-    // color: #a05a2c;
-    background-color: #d3d3d3;
+    font-size: 2rem;
+    color: var(--color-grey-dark-1);
+    font-weight: var(--fw-semi);
+    background-color: var(--color-grey-light-1);
     border-radius: 10px;
   }
 }
