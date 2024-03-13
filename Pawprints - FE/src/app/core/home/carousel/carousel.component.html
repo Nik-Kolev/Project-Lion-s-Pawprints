@@ -5,11 +5,11 @@
     'background-image': 'url(' + slides[currentSlide].url + ')',
   }"
     [@carouselAnimation]="currentSlide"
-  >
-    <p class="carousel__paragraph">
-      {{ slides[currentSlide].description }}
-    </p>
-  </div>
+  ></div>
+
+  <p class="carousel__paragraph">
+    {{ slides[currentSlide].description }}
+  </p>
 
   <div class="carousel__indicators">
     @for (slide of slides; track $index;) {

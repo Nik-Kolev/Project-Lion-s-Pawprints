@@ -2,23 +2,24 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #fff;
   padding: 0 6rem;
-  // box-shadow: var(--box-shadow);
+  box-shadow: var(--box-shadow-light);
 }
 
 .logo {
   display: flex;
-  gap: 2.4rem;
+  gap: 1rem;
   align-items: center;
 
   &__img {
-    width: 8rem;
+    width: 6rem;
     height: auto;
   }
 
   &__p {
     font-size: 2.4rem;
+    color: var(--color-primary-darker);
+    font-weight: var(--fw-bold);
   }
 }
 
@@ -33,7 +34,8 @@
 
   a:link,
   a:visited {
-    color: black;
+    color: var(--color-grey-dark-1);
+    font-weight: var(--fw-semi);
     text-decoration: none;
   }
 
@@ -45,10 +47,11 @@
   }
 
   &__login {
-    background-color: var(--btn-orange);
+    color: var(--color-primary) !important;
+    background-color: var(--color-secondary);
   }
 
   &__register {
-    background-color: var(--light-grey);
+    background-color: var(--color-grey-light-2);
   }
 }
