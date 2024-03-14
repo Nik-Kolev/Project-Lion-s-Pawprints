@@ -1,7 +1,6 @@
 .cta {
   text-align: center;
   padding: 2rem 0;
-  width: 90%;
   margin: 2rem auto;
   background: linear-gradient(
       -45deg,
@@ -10,38 +9,65 @@
     ),
     url("../../../../assets/cheetah.jpg") no-repeat center / cover;
   background-position: 100% 35%;
-  border-radius: 10px;
+  border-radius: 1rem;
   position: relative;
   color: var(--color-grey-light-1);
+
+  &__btn {
+    position: absolute;
+    bottom: 50%;
+    right: 5%;
+    transform: translateY(50%);
+
+    &::after {
+      background-color: var(--color-secondary-darker);
+    }
+
+    &:hover {
+      box-shadow: var(--box-shadow);
+
+      &::after {
+        transform: scaleX(1.4) scaleY(1.6);
+        border: 2px solid var(--color-primary);
+        opacity: 0;
+      }
+    }
+
+    &:active {
+      transform: translateY(60%);
+      box-shadow: var(--box-shadow);
+    }
+
+    &::after {
+      content: "";
+      display: inline-block;
+      height: 100%;
+      width: 100%;
+      border-radius: 1rem;
+
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -1;
+
+      transition: all 0.4s;
+    }
+
+    &--animated {
+      animation: moveInBottom 0.5s ease-out 0.25s;
+      animation-fill-mode: backwards;
+    }
+  }
 }
 
-.cta__p {
-  padding-left: 2rem;
-  position: relative;
-  font-size: 2rem;
-}
+@keyframes moveInBottom {
+  0% {
+    opacity: 0;
+    transform: translateY(3rem);
+  }
 
-.heading-primary {
-  position: relative;
-  font-size: 4rem;
-  padding-left: 2rem;
-}
-
-.cta__btn {
-  position: absolute;
-  font-size: 1.8rem;
-  bottom: 50%;
-  right: 5%;
-  transform: translateY(50%);
-
-  text-decoration: none;
-  color: #ffbf00;
-  background-color: #1a1e25;
-  border: 2px solid #ffbf00;
-  border-radius: 15px;
-  padding: 1rem 2rem;
-  font-weight: var(--fw-bold);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  cursor: pointer;
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
