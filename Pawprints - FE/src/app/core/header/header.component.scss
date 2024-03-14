@@ -32,18 +32,12 @@
     list-style: none;
   }
 
-  a:link,
-  a:visited {
-    color: var(--color-grey-dark-1);
-    font-weight: var(--fw-semi);
-    text-decoration: none;
-  }
-
   &__login,
   &__register {
     border-radius: 1rem;
     font-weight: 500;
     padding: 1rem 2.4rem;
+    border-bottom: none;
   }
 
   &__login {

@@ -7,6 +7,7 @@
   --color-primary-darker: #c77c02;
 
   --color-secondary: #262d38;
+  --color-secondary-darker: #1a1e25;
 
   --color-grey-light-1: #f8f9fa;
   --color-grey-light-2: #d3d3d3;
@@ -45,4 +46,66 @@ body {
   font-family: "Lato", sans-serif;
   font-weight: var(--fw-regular);
   background-color: var(--color-grey-light-1);
+}
+
+.main {
+  max-width: 90%;
+  margin: 0 auto;
+}
+
+.heading-primary,
+.heading-secondary {
+  color: var(--color-grey-light-2);
+  font-weight: var(--fw-bold);
+  letter-spacing: 0.5px;
+}
+
+.heading-primary {
+  font-size: 3.6rem;
+  line-height: 1.6;
+}
+
+.subheading {
+  font-size: 1.8rem;
+  font-weight: var(--fw-semi);
+  color: var(--color-grey-light-2);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.btn,
+.btn:link,
+.btn:visited {
+  display: inline-block;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+
+  font-size: 2rem;
+  font-weight: var(--fw-bold);
+  padding: 1.2rem 2.4rem;
+  border-radius: 1rem;
+  position: relative;
+
+  color: var(--color-primary);
+  background-color: var(--color-secondary-darker);
+  border: 1px solid var(--color-primary);
+  cursor: pointer;
+
+  transition: all 0.4s;
+}
+
+.link:link,
+.link:visited {
+  color: var(--color-grey-dark-1);
+  font-weight: var(--fw-semi);
+  text-decoration: none;
+  transition: all 0.3s;
+  border-bottom: 1px solid transparent;
+}
+
+.link:hover,
+.link:active {
+  color: var(--color-primary-darker);
+  border-bottom: 1px solid var(--color-grey-dark-1);
 }
