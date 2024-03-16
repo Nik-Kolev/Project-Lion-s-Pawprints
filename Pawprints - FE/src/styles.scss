@@ -25,7 +25,7 @@
   /* Shadow */
   --box-shadow-light: 0 4px 6px rgba(0, 0, 0, 0.1),
     0 1px 3px rgba(0, 0, 0, 0.08);
-  --box-shadow-dark: 4px 8px 8px hsl(0deg 0% 0% / 0.38);
+  --box-shadow-dark: 3px 6px 10px rgba(0, 0, 0, 0.38);
 }
 
 *,
@@ -39,6 +39,7 @@
 html {
   box-sizing: border-box;
   overflow-x: hidden;
+  overflow-y: scroll;
   font-size: 62.5%;
 }
 
@@ -56,14 +57,19 @@ body {
 
 .heading-primary,
 .heading-secondary {
-  color: var(--color-grey-light-2);
   font-weight: var(--fw-bold);
   letter-spacing: 0.5px;
 }
 
 .heading-primary {
+  color: var(--color-grey-light-2);
   font-size: 3.6rem;
   line-height: 1.6;
+}
+
+.heading-secondary {
+  color: var(--color-grey-dark-1);
+  margin-bottom: 4rem;
 }
 
 .subheading {

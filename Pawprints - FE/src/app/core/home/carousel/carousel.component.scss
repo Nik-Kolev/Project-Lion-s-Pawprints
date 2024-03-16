@@ -17,6 +17,7 @@
     background: center center / cover no-repeat;
     border-radius: 10px;
     filter: sepia(50%);
+    box-shadow: var(--box-shadow-dark);
   }
 
   &__indicators {
