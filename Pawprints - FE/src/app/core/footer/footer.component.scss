@@ -1,27 +1,23 @@
 .footer {
-  //   margin-top: 80vh;
-  z-index: 2;
-  //   display: flex;
-  text-align: center;
-  //   align-items: center;
-  //   justify-content: center;
+  display: flex;
+  flex-direction: column;
   font-size: 2rem;
-  gap: 4rem;
+  gap: 1.8rem;
 
   &__list {
     display: flex;
     list-style: none;
     justify-content: center;
-    gap: 2rem;
+    gap: 2.4rem;
   }
 
-  a {
-    text-decoration: none;
+  &__copyright {
+    font-size: 1.4rem;
+    text-align: center;
   }
 
-  &__links {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
+  &__social &__link {
+    font-size: 2.2rem;
+    border-bottom: none;
   }
 }
