@@ -1,0 +1,127 @@
+.top-rated {
+  font-size: 2rem;
+  margin: 0 auto 6rem;
+}
+
+.table {
+  display: grid;
+  border-radius: 10px;
+  background-color: var(--color-grey-light-2);
+  grid-template-columns: 1fr 6fr;
+  gap: 2rem;
+  box-shadow: var(--box-shadow-dark);
+  overflow: hidden;
+  position: relative;
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    padding: 4rem 2rem;
+    // background-color: red;
+  }
+
+  &__link {
+    align-self: center;
+  }
+
+  &__item {
+    position: relative;
+    font-size: 2.2rem;
+    list-style: none;
+    border-bottom: none;
+    padding: 1rem 2rem;
+    text-align: center;
+    display: flex;
+    gap: 1rem;
+    cursor: pointer;
+
+    & a {
+      border-bottom: none;
+    }
+
+    &--active::before {
+      content: "";
+      position: absolute;
+      right: -6rem;
+      top: 50%;
+      transform: translateY(-50%);
+      border-top: 20px solid transparent;
+      border-bottom: 20px solid transparent;
+      border-left: 20px solid var(--color-grey-light-2);
+    }
+  }
+
+  &__container {
+    color: var(--color-grey-light-1);
+    padding: 4rem 8rem;
+    background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.1) 0%,
+        rgba(0, 0, 0, 0.4) 60%,
+        rgba(0, 0, 0, 0.9) 100%
+      ),
+      url("../../../../assets/top-rated/tanzania.jpg") no-repeat;
+    background-size: cover;
+    background-position: 0% 100%;
+
+    & a {
+      color: var(--color-grey-light-2);
+      text-decoration: underline;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+
+  &__top {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+    padding-top: 1rem;
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    align-items: flex-end;
+  }
+
+  &__rating {
+    display: flex;
+    gap: 2rem;
+    font-size: 1.8rem;
+
+    &--span {
+      font-weight: var(--fw-bold);
+      font-size: 2.2rem;
+    }
+  }
+
+  &__reviews {
+    font-size: 1.8rem;
+    text-decoration: underline;
+    align-self: flex-end;
+  }
+
+  &__out-of {
+    margin-bottom: 4rem;
+  }
+
+  &__country-info {
+    width: 66ch;
+    margin-bottom: 6rem;
+    text-align: justify;
+    letter-spacing: 0.5px;
+  }
+
+  &__bottom {
+    display: flex;
+    align-items: center;
+    gap: 8rem;
+    margin-bottom: 4rem;
+  }
+}
+
+.fa-star {
+  font-size: 2.4rem;
+  color: var(--color-primary);
+}
