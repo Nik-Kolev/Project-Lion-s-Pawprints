@@ -3,11 +3,17 @@ import { Slide } from './slide.interface';
 import { CarouselComponent } from './carousel/carousel.component';
 import { Component } from '@angular/core';
 import { CtaComponent } from './cta/cta.component';
+import { FeaturedComponent } from './featured/featured.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CarouselComponent, CtaComponent, TopRatedComponent],
+  imports: [
+    CarouselComponent,
+    CtaComponent,
+    TopRatedComponent,
+    FeaturedComponent,
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
