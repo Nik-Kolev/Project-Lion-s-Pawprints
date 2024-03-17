@@ -1,0 +1,73 @@
+.blogs {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  margin-bottom: 10rem;
+
+  &__container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5rem;
+    height: 25rem;
+    text-decoration: none;
+  }
+
+  &__single {
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.3) 0%,
+        rgba(0, 0, 0, 0.4) 50%,
+        rgba(0, 0, 0, 0.5) 100%
+      ),
+      url("../../../../assets/top-rated/tanzania.jpg") no-repeat center/cover;
+    border-radius: 10px;
+    box-shadow: var(--box-shadow-dark);
+    position: relative;
+    transition: box-shadow 0.3s ease-in-out;
+
+    &:hover {
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.43), 0 6px 6px rgba(0, 0, 0, 0.23);
+      & p {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  &__p {
+    font-size: 2.4rem;
+    color: var(--color-grey-light-1);
+    position: absolute;
+    bottom: 25px;
+    left: 20px;
+  }
+
+  &__btn {
+    display: inline-block;
+    font-size: 2rem;
+    padding: 1.2rem 2.4rem;
+    color: var(--color-primary);
+    text-decoration: none;
+    border: 1px solid var(--color-grey-light-1);
+    background-color: var(--color-grey-dark-1);
+    border-radius: 10px;
+    border: 1px solid var(--color-secondary);
+
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    & i {
+      margin-left: 5px;
+      transition: transform 0.2s ease-in-out;
+    }
+
+    &:hover {
+      & i {
+        transform: translateX(5px);
+      }
+    }
+
+    &:active {
+      transform: translateY(2px);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    }
+  }
+}

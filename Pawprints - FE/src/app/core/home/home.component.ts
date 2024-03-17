@@ -4,6 +4,7 @@ import { CarouselComponent } from './carousel/carousel.component';
 import { Component } from '@angular/core';
 import { CtaComponent } from './cta/cta.component';
 import { FeaturedComponent } from './featured/featured.component';
+import { LatestBlogsComponent } from './latest-blogs/latest-blogs.component';
 
 @Component({
   selector: 'app-home',
@@ -13,6 +14,7 @@ import { FeaturedComponent } from './featured/featured.component';
     CtaComponent,
     TopRatedComponent,
     FeaturedComponent,
+    LatestBlogsComponent,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
