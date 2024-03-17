@@ -13,12 +13,17 @@
   overflow: hidden;
   position: relative;
 
+  &__safaris {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+
   &__list {
     display: flex;
     flex-direction: column;
     gap: 4rem;
-    padding: 4rem 2rem;
-    // background-color: red;
+    padding: 2rem;
   }
 
   &__link {
@@ -35,6 +40,7 @@
     display: flex;
     gap: 1rem;
     cursor: pointer;
+    border-bottom: 2px solid var(--color-grey-dark-3);
 
     & a {
       border-bottom: none;
@@ -54,12 +60,12 @@
 
   &__container {
     color: var(--color-grey-light-1);
-    padding: 4rem 8rem;
+    padding: 4rem 8rem 6rem;
     background: linear-gradient(
-        to top,
-        rgba(0, 0, 0, 0.1) 0%,
-        rgba(0, 0, 0, 0.4) 60%,
-        rgba(0, 0, 0, 0.9) 100%
+        to bottom,
+        rgba(0, 0, 0, 0.7) 0%,
+        rgba(0, 0, 0, 0.4) 50%,
+        rgba(0, 0, 0, 0.8) 100%
       ),
       url("../../../../assets/top-rated/tanzania.jpg") no-repeat;
     background-size: cover;
@@ -115,9 +121,58 @@
 
   &__bottom {
     display: flex;
-    align-items: center;
-    gap: 8rem;
-    margin-bottom: 4rem;
+    gap: 4rem;
+    margin-bottom: 2rem;
+
+    & div {
+      display: flex;
+
+      & i {
+        font-size: 3rem;
+        padding-top: 0.5rem;
+        margin-right: 1rem;
+      }
+    }
+  }
+
+  &__pricing,
+  &__best-time,
+  &__season {
+    display: flex;
+    flex-direction: column;
+    font-size: 1.8rem;
+
+    & p:first-child {
+      font-size: 2.2rem;
+      font-weight: var(--fw-bold);
+    }
+
+    & p:last-child {
+      width: 26ch;
+    }
+  }
+
+  &__season {
+    & p:last-child {
+      width: 33ch;
+    }
+  }
+
+  &__button {
+    padding: 1.2rem 2.4rem;
+    font-size: 1.8rem;
+    color: var(--color-primary) !important;
+    text-decoration: none !important;
+    border-radius: 10px;
+    border: 1px solid var(--color-grey-light-1);
+    background-color: rgba(0, 0, 0, 0.55);
+    font-weight: 500;
+    transition: 0.2s ease-in-out;
+
+    &:hover {
+      color: var(--color-grey-dark-1) !important;
+      background-color: var(--color-grey-light-2);
+    }
   }
 }
 
