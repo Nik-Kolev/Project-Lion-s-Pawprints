@@ -1,6 +1,6 @@
 <section class="login">
   <div class="login__background"></div>
-  <form class="form">
+  <form class="form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <div class="form__group">
       <input
         type="email"
@@ -8,16 +8,18 @@
         placeholder="Email address"
         id="email"
         required
+        formControlName="email"
       />
       <label for="email" class="form__label">Email address</label>
     </div>
     <div class="form__group">
       <input
-        type="text"
+        type="password"
         class="form__input"
         placeholder="Password"
         id="password"
         required
+        formControlName="password"
       />
       <label for="password" class="form__label">Password</label>
     </div>
