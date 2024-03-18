@@ -4,12 +4,14 @@
   align-items: center;
   padding: 0 6rem;
   box-shadow: var(--box-shadow-light);
+  height: 7vh;
 }
 
 .logo {
   display: flex;
   gap: 1rem;
   align-items: center;
+  cursor: pointer;
 
   &__img {
     width: 6rem;

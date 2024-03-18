@@ -16,6 +16,9 @@
   --color-grey-dark-2: #777;
   --color-grey-dark-3: #999;
 
+  /* Added later, thats why it is 4 - in order to not change most of the css files */
+  --color-grey-dark-4: #555;
+
   /* Font Weight */
   --fw-light: 300;
   --fw-regular: 400;
@@ -39,7 +42,6 @@
 html {
   box-sizing: border-box;
   overflow-x: hidden;
-  overflow-y: scroll;
   font-size: 62.5%;
 }
 
@@ -63,13 +65,13 @@ body {
 
 .heading-primary {
   color: var(--color-grey-light-2);
-  font-size: 3.6rem;
+  font-size: 2.4rem;
   line-height: 1.6;
 }
 
 .heading-secondary {
+  font-size: 3.6rem;
   color: var(--color-grey-dark-1);
-  margin-bottom: 4rem;
 }
 
 .subheading {

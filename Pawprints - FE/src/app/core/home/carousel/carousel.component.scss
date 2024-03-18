@@ -4,8 +4,8 @@
 }
 
 .carousel {
-  height: 60vh;
-  margin-top: 3rem;
+  height: 70vh;
+  margin: 4rem 0;
   position: relative;
 
   &__slide {
@@ -71,11 +71,11 @@
   &__paragraph {
     padding: 0.5rem 1rem;
     position: absolute;
-    bottom: 10px;
-    left: 10px;
+    bottom: 15px;
+    left: 15px;
     font-weight: 500;
     font-size: 2rem;
-    color: var(--color-grey-dark-1);
+    color: var(--color-grey-dark-4);
     font-weight: var(--fw-semi);
     background-color: var(--color-grey-light-1);
     border-radius: 10px;

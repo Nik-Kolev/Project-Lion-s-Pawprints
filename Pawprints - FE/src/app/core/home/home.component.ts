@@ -5,6 +5,7 @@ import { Component } from '@angular/core';
 import { CtaComponent } from './cta/cta.component';
 import { FeaturedComponent } from './featured/featured.component';
 import { LatestBlogsComponent } from './latest-blogs/latest-blogs.component';
+import { FooterComponent } from '../footer/footer.component';
 
 @Component({
   selector: 'app-home',
@@ -24,7 +25,7 @@ export class HomeComponent {
     {
       url: '../../../assets/carousel/ngorongoro.jpg',
       title: 'First Slide',
-      description: 'Ngorongoro crater',
+      description: 'Ngorongoro Crater',
     },
     {
       url: '../../../assets/carousel/ngorongoro-crater.jpg',

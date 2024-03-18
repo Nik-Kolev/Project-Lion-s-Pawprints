@@ -1,6 +1,10 @@
 .top-rated {
   font-size: 2rem;
-  margin: 0 auto 6rem;
+  margin-bottom: 10rem;
+
+  & h2 {
+    margin-bottom: 4rem;
+  }
 }
 
 .table {
@@ -170,9 +174,18 @@
     font-weight: 500;
     transition: 0.2s ease-in-out;
 
+    & i {
+      margin-left: 5px;
+      transition: transform 0.2s ease-in-out;
+    }
+
     &:hover {
       color: var(--color-grey-dark-1) !important;
       background-color: var(--color-grey-light-2);
+
+      & i {
+        transform: translateX(5px);
+      }
     }
 
     &:active {
