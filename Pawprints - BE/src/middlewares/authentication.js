@@ -2,7 +2,7 @@ const jwt = require("../utils/jwtPromisify");
 const { secret } = require("../config/config");
 
 module.exports.authentication = async (req, res, next) => {
-  const token = req.headers["auth"];
+  const token = req.cookies.token;
   if (token) {
     try {
       const decodedToken = await jwt.verify(token, secret);

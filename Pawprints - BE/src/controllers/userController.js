@@ -7,7 +7,7 @@ const { isGuest } = require("../middlewares/guards");
 
 userController.post("/login", isGuest, async (req, res) => {
   const { email, password } = req.body;
-
+  console.log(email);
   let errors = [];
 
   Object.entries(req.body).forEach(([fieldName, value]) => {
@@ -34,7 +34,13 @@ userController.post("/login", isGuest, async (req, res) => {
     }
 
     const token = await tokenCreator(user);
-    const data = { _id: user._id, email: user.email, admin: user.admin, token };
+    const data = { _id: user._id, email: user.email, admin: user.admin };
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+      maxAge: 24 * 60 * 60 * 1000,
+    });
     res.status(200).json(data);
   } catch (error) {
     errorHandler(error, res, req);
@@ -78,8 +84,13 @@ userController.post("/register", isGuest, async (req, res) => {
       _id: newUser._id,
       email: newUser.email,
       admin: newUser.admin,
-      token,
     };
+    res.cookie("token", data, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+      maxAge: 24 * 60 * 60 * 1000,
+    });
     res.status(200).json(data);
   } catch (error) {
     errorHandler(error, res, req);
@@ -87,7 +98,8 @@ userController.post("/register", isGuest, async (req, res) => {
 });
 
 userController.post("/logout", (req, res) => {
-  if (req.headers.auth) {
+  if (req.cookies.token) {
+    res.clearCookie("token", { httpOnly: true, secure: true, sameSite: "strict" });
     res.status(200).json({ message: "Logout successful.", code: "LOGOUT_SUCCESS" });
   } else {
     res.status(401).json({ error: "Invalid or missing token!", code: "INVALID_TOKEN" });
