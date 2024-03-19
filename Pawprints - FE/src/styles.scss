@@ -1,4 +1,5 @@
 @import "@fortawesome/fontawesome-free/css/all.css";
+@import "ngx-toastr/toastr";
 
 :root {
   /* Colors */
@@ -124,4 +125,22 @@ ul {
 .link:active {
   color: var(--color-primary-darker);
   border-bottom: 1px solid var(--color-grey-dark-1);
+}
+
+.toast-top-right {
+  top: 8rem;
+  right: 4rem;
+}
+
+.toast-message {
+  font-size: 1.8rem;
+}
+
+.toast-container .ngx-toastr {
+  border-radius: 10px;
+  width: 280px;
+}
+
+.toast-close-button {
+  top: -0.6em;
 }
