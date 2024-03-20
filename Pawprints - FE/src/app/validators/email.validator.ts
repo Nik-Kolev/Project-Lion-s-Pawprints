@@ -7,4 +7,5 @@ const emailRegex = new RegExp(
 export const emailValidator = {
   required: Validators.required,
   isValidEmail: Validators.pattern(emailRegex),
+  minlength: Validators.minLength(8),
 };
