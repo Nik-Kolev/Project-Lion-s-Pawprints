@@ -1,6 +1,6 @@
 <header class="header">
-  <div class="logo">
-    <a href="#">
+  <div class="logo" routerLink="/">
+    <a>
       <img
         src="../../../assets/paw-print.svg"
         alt="Safari Tales Logo - Paw"
@@ -11,18 +11,32 @@
   </div>
   <nav class="nav">
     <ul class="nav__list">
-      <li class="nav__item"><a href="#" class="nav__link link">Home</a></li>
-      <li class="nav__item"><a href="#" class="nav__link link">Safaris</a></li>
-      <li class="nav__item"><a href="#" class="nav__link link">About Us</a></li>
-      <li class="nav__item"><a href="#" class="nav__link link">Contacts</a></li>
-      <li class="nav__item"><a href="#" class="nav__link link">Blog</a></li>
       <li class="nav__item">
-        <a href="#" class="nav__link nav__login link">Login</a>
+        <a routerLink="/" class="nav__link link">Home</a>
       </li>
       <li class="nav__item">
-        <a href="#" class="nav__link nav__register link">Sign up</a>
+        <a routerLink="/Safaris" class="nav__link link">Safaris</a>
       </li>
-      <li class="nav__item"><a href="#" class="nav__link link">Logout</a></li>
+      <li class="nav__item">
+        <a routerLink="/About-us" class="nav__link link">About Us</a>
+      </li>
+      <li class="nav__item">
+        <a routerLink="/Contacts" class="nav__link link">Contacts</a>
+      </li>
+      <li class="nav__item">
+        <a routerLink="/Blog" class="nav__link link">Blog</a>
+      </li>
+      <li class="nav__item">
+        <a class="nav__link nav__login link" routerLink="/login">Login</a>
+      </li>
+      <li class="nav__item">
+        <a class="nav__link nav__register link" routerLink="/register"
+          >Sign up</a
+        >
+      </li>
+      <li class="nav__item">
+        <a href="#" class="nav__link link" (click)="onLogout($event)">Logout</a>
+      </li>
     </ul>
   </nav>
 </header>

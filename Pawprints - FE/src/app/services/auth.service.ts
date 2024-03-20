@@ -3,6 +3,7 @@ import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, tap } from 'rxjs';
 import { LocalStorageService } from './local-storage.service';
+import { ToastrService } from 'ngx-toastr';
 
 const { apiURL } = environment;
 
@@ -20,7 +21,11 @@ export class AuthService {
   public user$ = this.user$$.asObservable();
   user: User | undefined;
 
-  constructor(private http: HttpClient, private storage: LocalStorageService) {}
+  constructor(
+    private http: HttpClient,
+    private storage: LocalStorageService,
+    private toast: ToastrService
+  ) {}
 
   register(email: string, password: string) {
     return this.http
@@ -58,8 +63,8 @@ export class AuthService {
         })
       )
       .subscribe({
-        complete: () => console.log('Logout request completed'),
-        error: (error) => console.error('Logout request failed', error),
+        complete: () => this.toast.success('Logged out successfully.'),
+        error: (error) => this.toast.error(error.error.error),
       });
   }
 }

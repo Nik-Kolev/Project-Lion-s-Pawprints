@@ -6,6 +6,7 @@ import { RegisterComponent } from './user/register/register.component';
 export const routes: Routes = [
   {
     path: '',
+    pathMatch: 'full',
     component: HomeComponent,
   },
   {
