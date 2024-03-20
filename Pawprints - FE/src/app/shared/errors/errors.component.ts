@@ -12,6 +12,7 @@ import { Subscription } from 'rxjs';
 })
 export class ErrorsComponent {
   @Input() control?: FormControl | null | AbstractControl;
+  @Input() controlPasswordName!: string;
   private statusChangesSubscription?: Subscription;
 
   get errors(): string[] {
@@ -30,6 +31,18 @@ export class ErrorsComponent {
         controlErrors.push(
           `${this.controlName} is not valid. e.g. john.doe@gmail.com`
         );
+      }
+
+      if (
+        this.controlPasswordName === 'rePassword' &&
+        this.control.parent &&
+        this.control.parent.errors
+      ) {
+        Object.keys(this.control.parent.errors).forEach((errorKey) => {
+          if (errorKey === 'matchPasswordsValidator') {
+            controlErrors.push(`Passwords do not match.`);
+          }
+        });
       }
     }
 

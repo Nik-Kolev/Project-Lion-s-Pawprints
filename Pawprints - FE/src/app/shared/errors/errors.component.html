@@ -1,7 +1,7 @@
 @if (errors && errors.length > 0) {
-<ng-container class="input-errors">
+<div class="input-errors">
   @for(error of errors; track $index){
   <span class="input-error">{{ error }}</span>
   }
-</ng-container>
+</div>
 }
