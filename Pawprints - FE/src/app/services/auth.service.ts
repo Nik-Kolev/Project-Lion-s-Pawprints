@@ -27,9 +27,13 @@ export class AuthService {
     private toast: ToastrService
   ) {}
 
-  register(email: string, password: string) {
+  register(email: string, password: string, rePass: string) {
     return this.http
-      .post<User>(`${apiURL}/users/register`, { email, password })
+      .post<User>(
+        `${apiURL}/users/register`,
+        { email, password, rePass },
+        { withCredentials: true }
+      )
       .pipe(
         tap((user) => {
           this.user$$.next(user);

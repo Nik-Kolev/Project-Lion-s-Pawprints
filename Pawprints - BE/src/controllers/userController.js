@@ -85,7 +85,7 @@ userController.post("/register", isGuest, async (req, res) => {
       email: newUser.email,
       admin: newUser.admin,
     };
-    res.cookie("token", data, {
+    res.cookie("token", token, {
       httpOnly: true,
       secure: true,
       sameSite: "strict",
