@@ -2,6 +2,7 @@
   <div class="register__background"></div>
   <form class="form" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
     <div class="form__group">
+      <label for="email" class="form__label">Email address</label>
       <input
         type="email"
         class="form__input"
@@ -10,9 +11,12 @@
         required
         formControlName="email"
       />
-      <label for="email" class="form__label">Email address</label>
+      <div class="error-div">
+        <app-errors [control]="registerForm.get('email')"></app-errors>
+      </div>
     </div>
-    <div class="form__group">
+    <div class="form__group" formGroupName="passGroup">
+      <label for="password" class="form__label">Password</label>
       <input
         type="password"
         class="form__input"
@@ -21,9 +25,14 @@
         required
         formControlName="password"
       />
-      <label for="password" class="form__label">Password</label>
+      <div class="error-div">
+        <app-errors
+          [control]="registerForm.get(['passGroup', 'password'])"
+        ></app-errors>
+      </div>
     </div>
-    <div class="form__group">
+    <div class="form__group" formGroupName="passGroup">
+      <label for="rePassword" class="form__label">Repeat Password</label>
       <input
         type="password"
         class="form__input"
@@ -32,7 +41,12 @@
         required
         formControlName="rePassword"
       />
-      <label for="rePassword" class="form__label">Repeat Password</label>
+      <div class="error-div last">
+        <app-errors
+          [control]="registerForm.get(['passGroup', 'rePassword'])"
+          controlPasswordName="rePassword"
+        ></app-errors>
+      </div>
     </div>
     <div class="form__group">
       <button class="form__btn">
@@ -40,7 +54,8 @@
       </button>
     </div>
     <div class="form__no-account">
-      Already have an account ? <a href="#" class="link">Login here</a>
+      Already have an account ?
+      <a routerLink="/login" class="link">Login here</a>
     </div>
   </form>
 </section>

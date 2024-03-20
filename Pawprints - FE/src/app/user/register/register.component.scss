@@ -35,12 +35,12 @@
 .form {
   position: absolute;
   text-align: center;
-  top: 5rem;
+  top: 2.4rem;
   right: 30rem;
   padding: 6rem 8rem;
   display: flex;
   flex-direction: column;
-  gap: 3rem;
+  gap: 1.2rem;
   border-radius: 10px;
   box-shadow: var(--box-shadow-medium);
   background-color: #f2f1f2;
@@ -49,6 +49,7 @@
     font-size: 1.5rem;
     font-family: inherit;
     padding: 1.5rem 2rem;
+    margin-bottom: 1rem;
     border-radius: 2px;
     color: inherit;
     background-color: var(--color-grey-light-2);
@@ -76,16 +77,8 @@
   &__label {
     font-size: 1.6rem;
     font-weight: var(--fw-bold);
-    margin-left: 2rem;
-    margin-top: 0.7rem;
+    margin-bottom: 1rem;
     display: block;
-    transition: all 0.3s;
-  }
-
-  &__input:placeholder-shown + &__label {
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-4rem);
   }
 
   &__btn {
@@ -129,4 +122,12 @@
       font-weight: var(--fw-bold);
     }
   }
+}
+
+.error-div {
+  min-height: 2rem;
+}
+
+.last {
+  min-height: 4rem;
 }
