@@ -8,11 +8,7 @@ const routeSchema = new mongoose.Schema({
   },
   day: { type: String },
   dayTitle: { type: String },
-  descriptions: [
-    // {
-    //   paragraph: { type: String },
-    // },
-  ],
+  descriptions: { type: String },
   mainDestination: { type: String },
   accommodation: [
     {
@@ -25,7 +21,7 @@ const routeSchema = new mongoose.Schema({
   mealsAndDrinks: [
     {
       includedMeals: [],
-      drinksIncluded: { type: String },
+      drinksIncluded: [],
     },
   ],
   image: [

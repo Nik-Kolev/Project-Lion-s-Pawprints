@@ -5,17 +5,14 @@ const { isAuthorized } = require("../middlewares/guards");
 
 safariController.post("/createSafari", async (req, res) => {
   try {
-    // const { ownerId, safariTitle, headerImage, description } = req.body;
-    const { safariTitle, headerImage, description } = req.body;
-    console.log(safariTitle);
-    console.log(headerImage);
-    console.log(description);
+    const { ownerId, safariTitle, headerImage, description } = req.body;
+
     if (!safariTitle || !headerImage || !description) {
       return res.status(400).send({ message: "Missing required fields" });
     }
 
     const newSafari = await safariModel.create({
-      // ownerId,
+      ownerId,
       safariTitle,
       headerImage,
       description,

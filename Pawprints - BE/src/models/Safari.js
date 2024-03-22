@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 
 const safariSchema = new mongoose.Schema({
-  // owner: {
-  //   type: mongoose.Types.ObjectId,
-  //   ref: "User",
-  // },
+  owner: {
+    type: mongoose.Types.ObjectId,
+    ref: "User",
+  },
   safariTitle: {
     type: String,
   },
@@ -15,10 +15,6 @@ const safariSchema = new mongoose.Schema({
     alt: {
       type: String,
     },
-  },
-
-  description: {
-    type: String,
   },
   route: [
     {

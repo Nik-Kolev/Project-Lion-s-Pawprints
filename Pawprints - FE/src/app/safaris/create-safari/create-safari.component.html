@@ -1,0 +1,348 @@
+<section class="safariForm">
+  <form [formGroup]="safariForm" (ngSubmit)="onSubmit()">
+    <div class="safariForm__top--container">
+      <div>
+        <h4 class="safariForm__subheader">Safari Information :</h4>
+
+        <div class="form__group">
+          <label for="safariTitle" class="form__label">Safari Title :</label>
+          <input
+            type="text"
+            class="form__input"
+            placeholder="Name of the safari tour"
+            id="safariTitle"
+            required
+            formControlName="safariTitle"
+          />
+        </div>
+
+        <div class="form__group" formGroupName="price">
+          <div formGroupName="period">
+            <label for="periodFrom" class="form__label"
+              >Active Price From :</label
+            >
+            <input
+              type="date"
+              class="form__input"
+              id="periodFrom"
+              required
+              formControlName="from"
+            />
+          </div>
+
+          <div class="form__group" formGroupName="period">
+            <label for="periodTo" class="form__label">Active Price To :</label>
+            <input
+              type="date"
+              class="form__input"
+              id="periodTo"
+              required
+              formControlName="to"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div formGroupName="price">
+        <h4 class="safariForm__subheader">Pricing Information :</h4>
+
+        <div formGroupName="rates" class="safariForm__pricing--helper">
+          <div formGroupName="twoPeopleOneRoom">
+            <div class="form__group">
+              <label for="twoPeopleOneRoom" class="form__label"
+                >Two People - One Room :</label
+              >
+              <input
+                type="text"
+                class="form__input"
+                placeholder="e.g. $120"
+                id="twoPeopleOneRoom"
+                required
+                formControlName="price"
+              />
+            </div>
+          </div>
+          <div formGroupName="threePeopleTwoRooms">
+            <div class="form__group">
+              <label for="threePeopleTwoRooms" class="form__label"
+                >Three People - Two Rooms :</label
+              >
+              <input
+                type="text"
+                class="form__input"
+                placeholder="e.g. $120"
+                id="threePeopleTwoRooms"
+                required
+                formControlName="price"
+              />
+            </div>
+          </div>
+          <div formGroupName="fourPeopleTwoRooms">
+            <div class="form__group">
+              <label for="fourPeopleTwoRooms" class="form__label"
+                >Four People - Two Rooms :</label
+              >
+              <input
+                type="text"
+                class="form__input"
+                placeholder="e.g. $120"
+                id="fourPeopleTwoRooms"
+                required
+                formControlName="price"
+              />
+            </div>
+          </div>
+          <div formGroupName="fivePeopleThreeRooms">
+            <div class="form__group">
+              <label for="fivePeopleThreeRooms" class="form__label"
+                >Five People - Three Rooms :</label
+              >
+              <input
+                type="text"
+                class="form__input"
+                placeholder="e.g. $120"
+                id="fivePeopleThreeRooms"
+                required
+                formControlName="price"
+              />
+            </div>
+          </div>
+          <div formGroupName="sixPeopleThreeRooms">
+            <div class="form__group">
+              <label for="sixPeopleThreeRooms" class="form__label"
+                >Six People - Three Rooms :</label
+              >
+              <input
+                type="text"
+                class="form__input"
+                placeholder="e.g. $120"
+                id="sixPeopleThreeRooms"
+                required
+                formControlName="price"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form__group">
+        <input
+          type="file"
+          class="form__input safariForm__upload--input"
+          id="imageUrl"
+          required
+          formControlName="headerImage"
+          (change)="
+            onImagePreview({
+              event: $event,
+              path: 'imageUrl'
+            })
+          "
+        />
+        <label for="imageUrl" class="form__label safariForm__upload--label"
+          >Safari Header Image :</label
+        >
+
+        <div>
+          @if (imageUrl) {
+          <img [src]="imageUrl" class="safariForm__img--preview" />
+
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="safariForm__bottom--container" formArrayName="route">
+      <h4 class="safariForm__subheader">Day Information :</h4>
+      <div
+        *ngFor="let day of route.controls; let i = index"
+        [formGroupName]="i"
+      >
+        <div class="day-grid" @carouselAnimation>
+          <div class="border">
+            <div class="form__group">
+              <i
+                *ngIf="i === currentDay"
+                @fadeInOut
+                class="fa-solid fa-angles-right day__icon"
+              ></i>
+              <label for="day-{{ i }}" class="form__label">Day : </label>
+              <input
+                type="text"
+                class="form__input"
+                placeholder="{{ 'Day ' + (i + 1) }} of the tour"
+                id="day-{{ i }}"
+                required
+                formControlName="day"
+              />
+            </div>
+            <div class="form__group">
+              <label for="dayTitle-{{ i }}" class="form__label"
+                >Day Title :
+              </label>
+              <input
+                type="text"
+                class="form__input"
+                placeholder="e.g. Arrival, Departure, Hunt ..."
+                id="dayTitle-{{ i }}"
+                required
+                formControlName="dayTitle"
+              />
+            </div>
+            <div class="form__group">
+              <label for="description-{{ i }}" class="form__label"
+                >Description :</label
+              >
+              <input
+                type="text"
+                class="form__input"
+                placeholder="Activities during the day"
+                id="description-{{ i }}"
+                required
+                formControlName="description"
+              />
+            </div>
+            <div class="form__group">
+              <label for="mainDestination-{{ i }}" class="form__label"
+                >Main Destination :</label
+              >
+              <input
+                type="text"
+                class="form__input"
+                placeholder="City, Campsite, Park ..."
+                id="mainDestination-{{ i }}"
+                required
+                formControlName="mainDestination"
+              />
+            </div>
+            <div formGroupName="accommodation">
+              <div class="form__group">
+                <label for="accommodationName-{{ i }}" class="form__label"
+                  >Accommodation :</label
+                >
+                <input
+                  type="text"
+                  class="form__input"
+                  id="accommodationName-{{ i }}"
+                  formControlName="name"
+                  placeholder="e.g. Ngorongoro Lodge"
+                />
+              </div>
+            </div>
+          </div>
+          <div>
+            <div formGroupName="accommodation">
+              <div class="form__group">
+                <label for="accommodationType-{{ i }}" class="form__label"
+                  >Type :</label
+                >
+                <input
+                  type="text"
+                  class="form__input"
+                  id="accommodationType-{{ i }}"
+                  formControlName="type"
+                  placeholder="Luxury lodge"
+                />
+              </div>
+
+              <div class="form__group">
+                <label for="accommodationLocation-{{ i }}" class="form__label"
+                  >Location :</label
+                >
+                <input
+                  type="text"
+                  class="form__input"
+                  id="accommodationLocation-{{ i }}"
+                  formControlName="location"
+                  placeholder="crater rim of Ngorongoro Crater"
+                />
+              </div>
+              <div class="form__group">
+                <label for="accommodationLink-{{ i }}" class="form__label"
+                  >Link :</label
+                >
+                <input
+                  type="text"
+                  class="form__input"
+                  id="accommodationLink-{{ i }}"
+                  formControlName="link"
+                  placeholder="https://www.serenahotels.com/ngorongoro"
+                />
+              </div>
+            </div>
+            <div formGroupName="mealsAndDrinks">
+              <div class="form__group">
+                <label for="includedMeals-{{ i }}" class="form__label"
+                  >Included Meals :</label
+                >
+                <input
+                  type="text"
+                  class="form__input"
+                  id="includedMeals-{{ i }}"
+                  formControlName="includedMeals"
+                  placeholder="All meals included"
+                />
+              </div>
+              <div class="form__group">
+                <label for="drinksIncluded-{{ i }}" class="form__label"
+                  >Included Drinks :</label
+                >
+                <input
+                  type="text"
+                  class="form__input"
+                  id="drinksIncluded-{{ i }}"
+                  formControlName="drinksIncluded"
+                  placeholder="Drinking water & beer and wine"
+                />
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="form__group">
+              <input
+                type="file"
+                class="form__input safariForm__upload--input safariForm__upload--inputDay"
+                id="dayImage-{{ i }}"
+                required
+                formControlName="dayImage"
+                (change)="
+                  onImagePreview({
+                    event: $event,
+                    path: 'imageDayUrl',
+                    dayId: 'dayImage' + i
+                  })
+                "
+              />
+              <label
+                for="dayImage-{{ i }}"
+                class="form__label safariForm__upload--label safariForm__upload--labelDay"
+                >Day {{ i + 1 }} Header Image</label
+              >
+              <div>
+                @if (dayImageUrls['dayImage' + i]) {
+                <img
+                  [src]="dayImageUrls['dayImage' + i]"
+                  class="safariForm__img--preview"
+                />}
+              </div>
+            </div>
+            <button
+              type="button"
+              class="day-grid__btn day-grid__btn--remove"
+              (click)="removeDay(i)"
+            >
+              Remove Day {{ i + 1 }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="buttons">
+      <button type="button" class="day-grid__btn" (click)="addDay()">
+        Add Another Day
+      </button>
+      <button type="submit" class="submit__btn btn">
+        Submit <i class="fa-solid fa-angles-right"></i>
+      </button>
+    </div>
+  </form>
+</section>
