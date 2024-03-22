@@ -5,6 +5,7 @@ import { FooterComponent } from './core/footer/footer.component';
 import { HomeComponent } from './core/home/home.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from './services/auth.service';
+import { SafariService } from './services/safari.service';
 
 @Component({
   selector: 'app-root',
@@ -18,7 +19,7 @@ import { AuthService } from './services/auth.service';
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
-  providers: [AuthService],
+  providers: [AuthService, SafariService],
 })
 export class AppComponent {
   title = 'Pawprints';

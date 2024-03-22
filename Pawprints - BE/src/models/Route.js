@@ -26,8 +26,9 @@ const routeSchema = new mongoose.Schema({
   ],
   image: [
     {
-      src: { type: String },
-      alt: { type: String },
+      src: {
+        type: String,
+      },
     },
   ],
 });

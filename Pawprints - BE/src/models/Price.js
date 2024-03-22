@@ -4,42 +4,17 @@ const pricingSchema = new mongoose.Schema({
   safariTag: {
     type: mongoose.Types.ObjectId,
     ref: "Safari",
-    required: true,
   },
   period: {
-    type: String,
+    from: { type: String },
+    to: { type: String },
   },
   rates: {
-    twoPeopleOneRoom: {
-      price: {
-        type: Number,
-        required: true,
-      },
-    },
-    threePeopleTwoRooms: {
-      price: {
-        type: Number,
-        required: true,
-      },
-    },
-    fourPeopleTwoRooms: {
-      price: {
-        type: Number,
-        required: true,
-      },
-    },
-    fivePeopleThreeRooms: {
-      price: {
-        type: Number,
-        required: true,
-      },
-    },
-    sixPeopleThreeRooms: {
-      price: {
-        type: Number,
-        required: true,
-      },
-    },
+    twoPeopleOneRoom: { type: String },
+    threePeopleTwoRooms: { type: String },
+    fourPeopleTwoRooms: { type: String },
+    fivePeopleThreeRooms: { type: String },
+    sixPeopleThreeRooms: { type: String },
   },
 });
 

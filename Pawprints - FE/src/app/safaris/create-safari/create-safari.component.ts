@@ -8,6 +8,8 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { trigger, style, animate, transition } from '@angular/animations';
+import { SupabaseService } from '../../services/supabase.service';
+import { SafariService } from '../../services/safari.service';
 
 interface ImageUpdateParams {
   event: any;
@@ -38,24 +40,28 @@ export class CreateSafariComponent implements OnInit {
   imageUrl: string | ArrayBuffer = '../../../assets/safari/imagePreview.jpg';
   imageDayUrl: string | ArrayBuffer = '../../../assets/safari/imagePreview.jpg';
   dayImageUrls: { [key: string]: string | ArrayBuffer } = {};
+  selectedHeaderImageFile: File | null = null;
+  selectedDayImages: Array<File> | null = null;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private supabase: SupabaseService,
+    private safariService: SafariService
+  ) {
     this.safariForm = this.fb.group({
       safariTitle: '',
       headerImage: '',
       route: this.fb.array([]),
-      price: this.fb.group({
-        period: this.fb.group({
-          from: '',
-          to: '',
-        }),
-        rates: this.fb.group({
-          twoPeopleOneRoom: this.fb.group({ price: '' }),
-          threePeopleTwoRooms: this.fb.group({ price: '' }),
-          fourPeopleTwoRooms: this.fb.group({ price: '' }),
-          fivePeopleThreeRooms: this.fb.group({ price: '' }),
-          sixPeopleThreeRooms: this.fb.group({ price: '' }),
-        }),
+      period: this.fb.group({
+        from: '',
+        to: '',
+      }),
+      rates: this.fb.group({
+        twoPeopleOneRoom: '',
+        threePeopleTwoRooms: '',
+        fourPeopleTwoRooms: '',
+        fivePeopleThreeRooms: '',
+        sixPeopleThreeRooms: '',
       }),
     });
   }
@@ -102,8 +108,10 @@ export class CreateSafariComponent implements OnInit {
       reader.onload = (e: any) => {
         if (path === 'imageDayUrl' && dayId) {
           this.dayImageUrls[dayId] = e.target.result;
+          this.selectedDayImages?.push(file);
         } else {
           this[path] = e.target.result;
+          this.selectedHeaderImageFile = file;
         }
       };
 
@@ -116,6 +124,35 @@ export class CreateSafariComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log(this.safariForm);
+    // if (this.selectedHeaderImageFile && this.selectedDayImages) {
+    //   this.supabase
+    //     .supabaseUploader(this.selectedHeaderImageFile, 'saf2')
+    //     .subscribe({
+    //       next: (url) => {
+    // this.link = `success ${url}`;
+    // },
+    // error: (error) => {
+    // this.link = `Error: ${error.message}`;
+    //   },
+    // });
+    // console.log(this.link);
+    // }
+    this.safariService
+      .uploadPrices(
+        '65fbfd52a3ab118e35c8a652',
+        this.safariForm.value.period,
+        this.safariForm.value.rates
+      )
+      .subscribe({
+        next: (x) => {
+          console.log(x);
+          console.log('Success');
+        },
+        error: (error) => {
+          // console.log('asd');
+          console.log(error);
+        },
+      });
+    console.log(this.safariForm.value);
   }
 }

@@ -7,7 +7,6 @@ const { isGuest } = require("../middlewares/guards");
 
 userController.post("/login", isGuest, async (req, res) => {
   const { email, password } = req.body;
-  console.log(email);
   let errors = [];
 
   Object.entries(req.body).forEach(([fieldName, value]) => {

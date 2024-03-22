@@ -12,9 +12,6 @@ const safariSchema = new mongoose.Schema({
     src: {
       type: String,
     },
-    alt: {
-      type: String,
-    },
   },
   route: [
     {
