@@ -1,4 +1,5 @@
-import { carouselAnimation } from './../../animations';
+import { Day } from './../../services/safari.service';
+import { arrowAnimation, carouselAnimation } from './../../animations';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
@@ -7,14 +8,15 @@ import {
   FormGroup,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { trigger, style, animate, transition } from '@angular/animations';
 import { SupabaseService } from '../../services/supabase.service';
 import { SafariService } from '../../services/safari.service';
+import { delay, forkJoin, of, switchMap, concatMap } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
-interface ImageUpdateParams {
+interface ImageParams {
   event: any;
-  path: 'imageUrl' | 'imageDayUrl';
-  dayId?: string;
+  type: 'headerImage' | 'dayImage';
+  dayId?: number;
 }
 
 @Component({
@@ -23,35 +25,27 @@ interface ImageUpdateParams {
   imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './create-safari.component.html',
   styleUrl: './create-safari.component.scss',
-  animations: [
-    trigger('fadeInOut', [
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate('500ms', style({ opacity: 1 })),
-      ]),
-      transition(':leave', [animate('500ms', style({ opacity: 0 }))]),
-    ]),
-    carouselAnimation,
-  ],
+  animations: [arrowAnimation, carouselAnimation],
 })
 export class CreateSafariComponent implements OnInit {
   safariForm!: FormGroup;
   currentDay!: number;
-  imageUrl: string | ArrayBuffer = '../../../assets/safari/imagePreview.jpg';
-  imageDayUrl: string | ArrayBuffer = '../../../assets/safari/imagePreview.jpg';
-  dayImageUrls: { [key: string]: string | ArrayBuffer } = {};
-  selectedHeaderImageFile: File | null = null;
-  selectedDayImages: Array<File> | null = null;
+
+  headerSafariImage: string = '../../../assets/safari/imagePreview.jpg';
+  selectedSafariImage!: File;
+  daySafariImages: string[] = [];
+  selectedDayImages: Array<File> = [];
 
   constructor(
     private fb: FormBuilder,
     private supabase: SupabaseService,
-    private safariService: SafariService
+    private safariService: SafariService,
+    private toastService: ToastrService
   ) {
     this.safariForm = this.fb.group({
       safariTitle: '',
-      headerImage: '',
-      route: this.fb.array([]),
+      safariImage: '',
+      days: this.fb.array([]),
       period: this.fb.group({
         from: '',
         to: '',
@@ -66,55 +60,50 @@ export class CreateSafariComponent implements OnInit {
     });
   }
 
-  get route(): FormArray {
-    return this.safariForm.get('route') as FormArray;
+  get days(): FormArray {
+    return this.safariForm.get('days') as FormArray;
   }
 
   addDay(): void {
-    const dayId = `dayImage${this.route.controls.length}`;
-    this.dayImageUrls[dayId] = '../../../assets/safari/imagePreview.jpg';
-
     const dayFormGroup = this.fb.group({
       day: [{ value: '', disabled: true }],
       dayTitle: '',
       description: '',
       mainDestination: '',
-      accommodation: this.fb.group({
-        name: '',
-        type: '',
-        location: '',
-        link: '',
-      }),
-      mealsAndDrinks: this.fb.group({
-        includedMeals: '',
-        drinksIncluded: '',
-      }),
+      hotelName: '',
+      hotelLink: '',
+      hotelType: '',
+      hotelLocation: '',
+      includedMeals: '',
+      includedDrinks: '',
       dayImage: '',
     });
-    this.currentDay = this.route.controls.length;
-    this.route.push(dayFormGroup);
+
+    this.currentDay = this.days.controls.length;
+    this.days.push(dayFormGroup);
   }
 
   removeDay(index: number): void {
-    this.route.removeAt(index);
-    this.currentDay = this.route.controls.length - 1;
+    this.daySafariImages.splice(index, 1);
+    this.selectedDayImages.splice(index, 1);
+    this.days.removeAt(index);
+    this.currentDay = this.days.controls.length - 1;
   }
 
-  onImagePreview({ event, path, dayId }: ImageUpdateParams): void {
+  onImagePreview({ event, type, dayId }: ImageParams): void {
     const file: File = event.target.files[0];
+
     if (file) {
       const reader = new FileReader();
-
       reader.onload = (e: any) => {
-        if (path === 'imageDayUrl' && dayId) {
-          this.dayImageUrls[dayId] = e.target.result;
-          this.selectedDayImages?.push(file);
+        if (type === 'dayImage' && dayId !== undefined) {
+          this.daySafariImages[dayId] = e.target.result;
+          this.selectedDayImages.push(file);
         } else {
-          this[path] = e.target.result;
-          this.selectedHeaderImageFile = file;
+          this.headerSafariImage = e.target.result;
+          this.selectedSafariImage = file;
         }
       };
-
       reader.readAsDataURL(file);
     }
   }
@@ -123,36 +112,50 @@ export class CreateSafariComponent implements OnInit {
     this.addDay();
   }
 
+  safariTag(title: string) {
+    return title
+      .split('-')
+      .join('')
+      .split(' ')
+      .slice(0, 5)
+      .map((x: string) => x[0])
+      .join('');
+  }
+
   onSubmit(): void {
-    // if (this.selectedHeaderImageFile && this.selectedDayImages) {
-    //   this.supabase
-    //     .supabaseUploader(this.selectedHeaderImageFile, 'saf2')
-    //     .subscribe({
-    //       next: (url) => {
-    // this.link = `success ${url}`;
-    // },
-    // error: (error) => {
-    // this.link = `Error: ${error.message}`;
-    //   },
-    // });
-    // console.log(this.link);
-    // }
-    this.safariService
-      .uploadPrices(
-        '65fbfd52a3ab118e35c8a652',
-        this.safariForm.value.period,
-        this.safariForm.value.rates
+    this.supabase
+      .supabaseUploader(
+        this.selectedSafariImage,
+        this.safariTag(this.safariForm.value.safariTitle)
+      )
+      .pipe(
+        switchMap((uploadSafariImage) => {
+          this.safariForm.value.safariImage = uploadSafariImage;
+          const uploadDayImages = this.selectedDayImages.map(
+            (dayImageFile, index) =>
+              of(dayImageFile).pipe(
+                delay(1500),
+                concatMap((file) =>
+                  this.supabase.supabaseUploader(
+                    file,
+                    this.safariTag(this.safariForm.value.safariTitle)
+                  )
+                )
+              )
+          );
+          return forkJoin(uploadDayImages).pipe(
+            switchMap((response) => {
+              response.forEach((uploadedImageUrl, i) => {
+                this.safariForm.value.days[i].dayImage = uploadedImageUrl;
+              });
+              return this.safariService.createSafari(this.safariForm.value);
+            })
+          );
+        })
       )
       .subscribe({
-        next: (x) => {
-          console.log(x);
-          console.log('Success');
-        },
-        error: (error) => {
-          // console.log('asd');
-          console.log(error);
-        },
+        next: () => this.toastService.success('Safari created.'),
+        error: (err) => this.toastService.error(err),
       });
-    console.log(this.safariForm.value);
   }
 }

@@ -3,7 +3,6 @@
     <div class="safariForm__top--container">
       <div>
         <h4 class="safariForm__subheader">Safari Information :</h4>
-
         <div class="form__group">
           <label for="safariTitle" class="form__label">Safari Title :</label>
           <input
@@ -121,39 +120,28 @@
           class="form__input safariForm__upload--input"
           id="imageUrl"
           required
-          formControlName="headerImage"
-          (change)="
-            onImagePreview({
-              event: $event,
-              path: 'imageUrl'
-            })
-          "
+          formControlName="safariImage"
+          (change)="onImagePreview({ event: $event, type: 'headerImage' })"
         />
         <label for="imageUrl" class="form__label safariForm__upload--label"
-          >Safari Header Image :</label
+          >Safari Header Image</label
         >
 
         <div>
-          @if (imageUrl) {
-          <img [src]="imageUrl" class="safariForm__img--preview" />
-
-          }
+          <img [src]="headerSafariImage" class="safariForm__img--preview" />
         </div>
       </div>
     </div>
 
-    <div class="safariForm__bottom--container" formArrayName="route">
+    <div class="safariForm__bottom--container" formArrayName="days">
       <h4 class="safariForm__subheader">Day Information :</h4>
-      <div
-        *ngFor="let day of route.controls; let i = index"
-        [formGroupName]="i"
-      >
+      <div *ngFor="let day of days.controls; let i = index" [formGroupName]="i">
         <div class="day-grid" @carouselAnimation>
           <div class="border">
             <div class="form__group">
               <i
                 *ngIf="i === currentDay"
-                @fadeInOut
+                @arrowAnimation
                 class="fa-solid fa-angles-right day__icon"
               ></i>
               <label for="day-{{ i }}" class="form__label">Day : </label>
@@ -205,62 +193,61 @@
                 formControlName="mainDestination"
               />
             </div>
-            <div formGroupName="accommodation">
-              <div class="form__group">
-                <label for="accommodationName-{{ i }}" class="form__label"
-                  >Accommodation :</label
-                >
-                <input
-                  type="text"
-                  class="form__input"
-                  id="accommodationName-{{ i }}"
-                  formControlName="name"
-                  placeholder="e.g. Ngorongoro Lodge"
-                />
-              </div>
+
+            <div class="form__group">
+              <label for="accommodationName-{{ i }}" class="form__label"
+                >Hotel Name :</label
+              >
+              <input
+                type="text"
+                class="form__input"
+                id="accommodationName-{{ i }}"
+                formControlName="hotelName"
+                placeholder="e.g. Ngorongoro Lodge"
+              />
             </div>
           </div>
           <div>
-            <div formGroupName="accommodation">
+            <div>
               <div class="form__group">
                 <label for="accommodationType-{{ i }}" class="form__label"
-                  >Type :</label
+                  >Hotel Type :</label
                 >
                 <input
                   type="text"
                   class="form__input"
                   id="accommodationType-{{ i }}"
-                  formControlName="type"
+                  formControlName="hotelType"
                   placeholder="Luxury lodge"
                 />
               </div>
 
               <div class="form__group">
                 <label for="accommodationLocation-{{ i }}" class="form__label"
-                  >Location :</label
+                  >Hotel Location :</label
                 >
                 <input
                   type="text"
                   class="form__input"
                   id="accommodationLocation-{{ i }}"
-                  formControlName="location"
+                  formControlName="hotelLocation"
                   placeholder="crater rim of Ngorongoro Crater"
                 />
               </div>
               <div class="form__group">
                 <label for="accommodationLink-{{ i }}" class="form__label"
-                  >Link :</label
+                  >Hotel Link :</label
                 >
                 <input
                   type="text"
                   class="form__input"
                   id="accommodationLink-{{ i }}"
-                  formControlName="link"
+                  formControlName="hotelLink"
                   placeholder="https://www.serenahotels.com/ngorongoro"
                 />
               </div>
             </div>
-            <div formGroupName="mealsAndDrinks">
+            <div>
               <div class="form__group">
                 <label for="includedMeals-{{ i }}" class="form__label"
                   >Included Meals :</label
@@ -281,7 +268,7 @@
                   type="text"
                   class="form__input"
                   id="drinksIncluded-{{ i }}"
-                  formControlName="drinksIncluded"
+                  formControlName="includedDrinks"
                   placeholder="Drinking water & beer and wine"
                 />
               </div>
@@ -298,8 +285,8 @@
                 (change)="
                   onImagePreview({
                     event: $event,
-                    path: 'imageDayUrl',
-                    dayId: 'dayImage' + i
+                    type: 'dayImage',
+                    dayId: i
                   })
                 "
               />
@@ -309,11 +296,16 @@
                 >Day {{ i + 1 }} Header Image</label
               >
               <div>
-                @if (dayImageUrls['dayImage' + i]) {
+                @if (daySafariImages[i]) {
                 <img
-                  [src]="dayImageUrls['dayImage' + i]"
+                  [src]="daySafariImages[i]"
                   class="safariForm__img--preview"
-                />}
+                />} @else {
+                <img
+                  src="../../../assets/safari/imagePreview.jpg"
+                  class="safariForm__img--preview"
+                />
+                }
               </div>
             </div>
             <button
@@ -327,6 +319,7 @@
         </div>
       </div>
     </div>
+    <!-- </div> -->
     <div class="buttons">
       <button type="button" class="day-grid__btn" (click)="addDay()">
         Add Another Day
