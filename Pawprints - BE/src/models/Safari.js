@@ -8,7 +8,9 @@ const safariSchema = new mongoose.Schema({
   safariTitle: {
     type: String,
   },
-  images: [{ type: String }],
+  safariImage: {
+    type: String,
+  },
   days: [
     {
       dayTitle: { type: String },
@@ -20,6 +22,7 @@ const safariSchema = new mongoose.Schema({
       hotelLocation: { type: String },
       includedMeals: [{ type: String }],
       includedDrinks: [{ type: String }],
+      dayImage: { type: String },
     },
   ],
   period: {
