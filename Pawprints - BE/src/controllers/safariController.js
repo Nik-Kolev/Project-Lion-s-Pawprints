@@ -3,46 +3,31 @@ const safariModel = require("../models/Safari");
 const errorHandler = require("../utils/errorHandler");
 const { isAuthorized } = require("../middlewares/guards");
 
-safariController.post("/createSafari", async (req, res) => {
+safariController.post("/createSafari", isAuthorized, async (req, res) => {
   try {
-    const { ownerId, safariTitle, headerImage, description } = req.body;
+    const { safariTitle, images, days, period, rates } = req.body;
 
-    if (!safariTitle || !headerImage || !description) {
-      return res.status(400).send({ message: "Missing required fields" });
-    }
+    const newSafari = await safariModel.create({ owner: req.user._id, safariTitle, images, days, period, rates });
 
-    const newSafari = await safariModel.create({
-      ownerId,
-      safariTitle,
-      headerImage,
-      description,
-    });
-
-    res.status(201).send({ message: "Safari created successfully", data: { id: newSafari._id } });
+    res.status(201).send(newSafari);
   } catch (error) {
     res.status(500).send({ message: "Error creating safari", error: error.message });
-    console.log(error);
     errorHandler(error);
   }
 });
 
-safariController.post("/updateSafari", async (req, res) => {
+safariController.post("/updateSafari", isAuthorized, async (req, res) => {
   try {
-    const { safariId, routeId, priceId } = req.body;
-    console.log(safariId, routeId, priceId);
-    const asd = await safariModel.findByIdAndUpdate(
+    const { safariId, safariTitle, images, days, period, rates } = req.body;
+    console.log(req.user._id);
+    const updatedSafari = await safariModel.findByIdAndUpdate(
       safariId,
-      {
-        $addToSet: { route: routeId },
-        $set: { price: priceId },
-      },
+      { safariTitle, images, days, period, rates },
       { new: true }
     );
-    console.log(asd);
-    res.status(201).send({ message: "Safari updated successfully", data: asd });
+    res.status(201).send(updatedSafari);
   } catch (error) {
     res.status(500).send({ message: "Error creating safari", error: error.message });
-    console.log(error);
     errorHandler(error);
   }
 });

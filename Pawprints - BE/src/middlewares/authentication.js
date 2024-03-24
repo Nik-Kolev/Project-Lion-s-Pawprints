@@ -8,7 +8,6 @@ module.exports.authentication = async (req, res, next) => {
       const decodedToken = await jwt.verify(token, secret);
       if (decodedToken) {
         req.user = decodedToken;
-        next();
       } else {
         return res.status(401).json({ error: "Unauthorized", code: "INVALID_TOKEN" });
       }

@@ -8,20 +8,30 @@ const safariSchema = new mongoose.Schema({
   safariTitle: {
     type: String,
   },
-  headerImage: {
-    src: {
-      type: String,
-    },
-  },
-  route: [
+  images: [{ type: String }],
+  days: [
     {
-      type: mongoose.Types.ObjectId,
-      ref: "Route",
+      dayTitle: { type: String },
+      descriptions: { type: String },
+      mainDestination: { type: String },
+      hotelName: { type: String },
+      hotelLink: { type: String },
+      hotelType: { type: String },
+      hotelLocation: { type: String },
+      includedMeals: [{ type: String }],
+      includedDrinks: [{ type: String }],
     },
   ],
-  price: {
-    type: mongoose.Types.ObjectId,
-    ref: "Price",
+  period: {
+    from: { type: String },
+    to: { type: String },
+  },
+  rates: {
+    twoPeopleOneRoom: { type: String },
+    threePeopleTwoRooms: { type: String },
+    fourPeopleTwoRooms: { type: String },
+    fivePeopleThreeRooms: { type: String },
+    sixPeopleThreeRooms: { type: String },
   },
 });
 
