@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, tap } from 'rxjs';
+import { BehaviorSubject, Subscription, tap } from 'rxjs';
 import { LocalStorageService } from './local-storage.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -19,13 +19,26 @@ interface User {
 export class AuthService {
   private user$$ = new BehaviorSubject<User | undefined>(undefined);
   public user$ = this.user$$.asObservable();
+
   user: User | undefined;
+  userSubscription: Subscription;
 
   constructor(
     private http: HttpClient,
     private storage: LocalStorageService,
     private toast: ToastrService
-  ) {}
+  ) {
+    this.initializeUserData();
+    this.userSubscription = this.user$.subscribe((user) => {
+      this.user = user;
+    });
+  }
+
+  initializeUserData() {
+    if (this.storage.getItem('user')) {
+      this.user$$.next(this.storage.getItem('user'));
+    }
+  }
 
   register(email: string, password: string, rePass: string) {
     return this.http
