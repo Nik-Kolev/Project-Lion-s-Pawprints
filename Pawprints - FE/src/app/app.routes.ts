@@ -4,6 +4,7 @@ import { LoginComponent } from './user/login/login.component';
 import { RegisterComponent } from './user/register/register.component';
 import { DisplaySafariComponent } from './safaris/display-safari/display-safari.component';
 import { CreateSafariComponent } from './safaris/create-safari/create-safari.component';
+import { CatalogSafariComponent } from './safaris/catalog-safari/catalog-safari.component';
 
 export const routes: Routes = [
   {
@@ -26,5 +27,9 @@ export const routes: Routes = [
   {
     path: 'createSafari',
     component: CreateSafariComponent,
+  },
+  {
+    path: 'catalogSafari',
+    component: CatalogSafariComponent,
   },
 ];
