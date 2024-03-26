@@ -36,10 +36,11 @@
     left: 0;
     background: linear-gradient(
       to right,
-      rgb(0, 0, 0) 0%,
-      rgba(0, 0, 0) 20%,
-      rgba(0, 0, 0, 0.6) 45%,
-      rgba(0, 0, 0, 0) 80%
+      rgb(0, 0, 0, 0.4) 0%,
+      rgba(0, 0, 0, 0.3) 25%,
+      rgba(0, 0, 0, 0.2) 50%,
+      rgba(0, 0, 0, 0.1) 75%,
+      rgba(0, 0, 0, 0) 100%
     );
     pointer-events: none;
   }
@@ -104,10 +105,10 @@
     left: 0;
     background: linear-gradient(
       to right,
-      rgba(0, 0, 0, 0.7) 0%,
-      rgba(0, 0, 0, 0.5) 25%,
-      rgba(0, 0, 0, 0.3) 50%,
-      rgba(0, 0, 0, 0.2) 75%,
+      rgb(0, 0, 0, 0.4) 0%,
+      rgba(0, 0, 0, 0.3) 25%,
+      rgba(0, 0, 0, 0.2) 50%,
+      rgba(0, 0, 0, 0.1) 75%,
       rgba(0, 0, 0, 0) 100%
     );
   }
@@ -120,8 +121,8 @@
 
   &__p {
     font-size: 1.6rem;
-    width: 56ch;
-    text-align: justify;
+    width: 66ch;
+    // text-align: justify;
     line-height: 1.3;
   }
 

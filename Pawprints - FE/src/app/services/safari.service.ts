@@ -5,6 +5,7 @@ import { environment } from '../../environments/environment';
 const { apiURL } = environment;
 
 export interface Safari {
+  _id?: string;
   safariId?: string;
   safariTitle: string;
   safariImage: '';
@@ -24,7 +25,7 @@ export interface Safari {
 
 export interface Day {
   dayTitle: string;
-  descriptions: string;
+  descriptions: string[];
   mainDestination: string;
   hotelName: string;
   hotelLink: string;
@@ -51,5 +52,18 @@ export class SafariService {
     return this.http.post<Safari>(`${apiURL}/safari/updateSafari`, safari, {
       withCredentials: true,
     });
+  }
+
+  fetchCatalogSafaris() {
+    return this.http.get<Safari[]>(`${apiURL}/safari/fetchCatalogSafaris`, {
+      withCredentials: true,
+    });
+  }
+
+  fetchSafariById(safariId: string) {
+    return this.http.get<Safari>(
+      `${apiURL}/safari/fetchSafariById/${safariId}`,
+      { withCredentials: true }
+    );
   }
 }

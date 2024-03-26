@@ -1,24 +1,32 @@
 <section class="catalog-safari">
-  <div class="safariCard">
+  @for (safari of safariList; track $index) {
+  <div class="safariCard" (click)="navigateToDetails(safari._id)">
     <header class="header">
       <div class="header__img-container">
-        <img
-          src="../../../assets/safari/Nyerere_National_Park_011.jpg"
-          alt="Nyerere_National_Park_011"
-        />
+        <img src="{{ safari.safariImage }}" alt="{{ safari.safariTitle }}" />
       </div>
-      <h2 class="header__h2">5-Day Serengeti & Ngorongoro Mid Range Safari</h2>
+      <h2 class="header__h2">{{ safari.safariTitle }}</h2>
     </header>
     <div class="safariInfo">
-      <p class="safariInfo__price">$ 1,815 <span>pp (USD)</span></p>
-      <p class="safariInfo__budget-type">
-        If below 1200pp - budget, 1200-2400 - mid-range, over 2400 - luxury
-        Safari
+      <p class="safariInfo__price">
+        $ {{ safari.rates.twoPeopleOneRoom }} <span> pp (USD)</span>
       </p>
-      <p class="safariInfo__hotel-type">camp</p>
+      <p class="safariInfo__budget-type">
+        Private Tour <i class="fa-solid fa-circle"></i>
+        <ng-container>
+          {{ getSafariRateCategory(safari.rates.twoPeopleOneRoom) }} Safari
+        </ng-container>
+        <i class="fa-solid fa-circle"></i> {{ safari.days[0].hotelType }}
+      </p>
       <div class="safariInfo__destinations">
-        You will visit: Arusha, Arusha, Arusha, Arusha
+        <span
+          >You will visit :&nbsp;
+          <ng-container *ngFor="let day of safari.days; let last = last">
+            {{ day.hotelLocation }} <span *ngIf="!last">, </span>
+          </ng-container>
+        </span>
       </div>
     </div>
   </div>
+  }
 </section>

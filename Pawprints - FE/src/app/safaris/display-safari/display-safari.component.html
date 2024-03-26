@@ -2,36 +2,29 @@
   <header class="header">
     <div class="header__img-container">
       <img
-        src="../../../assets/safari/Nyerere_National_Park_011.jpg"
+        src="{{ currentSafari?.safariImage }}"
         alt="Nyerere_National_Park_011"
       />
     </div>
-    <h2 class="header__h2">5-Day Serengeti & Ngorongoro Mid Range Safari</h2>
+    <h2 class="header__h2">{{ currentSafari?.safariTitle }}</h2>
   </header>
   <div class="border-container">
+    @for (day of currentSafari?.days; track $index) {
     <div class="day">
       <div class="day__info-container">
         <div class="day__header-container">
           <i class="fa-solid fa-angles-right day__icon"></i>
-          <h3 class="day__header">Day 1 - Arrival</h3>
+          <h3 class="day__header">Day {{ $index + 1 }} - {{ day.dayTitle }}</h3>
         </div>
-        <p class="day__p">You'll be collected from the airport.</p>
-        <p class="day__p">
-          Accommodation before the tour starts can be arranged for an extra
-          cost.
-        </p>
-        <p class="day__p">
-          We will pick you up from the airport & transfer you to Tulia spa &
-          boutique. A city sightseeing tour comes as part of the excursion for
-          day 1. The city excursion will involve visiting the local markets,
-          Masai market, cultural heritage & Arusha city museum.
-        </p>
+        @for (description of day.descriptions; track $index) {
+        <p class="day__p">{{ day.descriptions[$index] }}</p>
+        }
         <div class="day__div">
           <span>Main Destination:</span>
           <div>
             <p class="day__p">
               <i class="fa-solid fa-chevron-right"></i>
-              Arusha (City)
+              {{ day.mainDestination }}
             </p>
           </div>
         </div>
@@ -40,37 +33,55 @@
           <div>
             <p class="day__p">
               <i class="fa-solid fa-chevron-right"></i>
-              <a href="https://www.tuliahotelandspa.com/" class="link">
-                Tulia Boutique Hotel & Spa</a
+              @if (day.hotelLink.length != 1) {
+              <a href="{{ day.hotelLink }}" class="link">
+                {{ day.hotelName }}</a
               >
+              } @else {
+              <ng-container> No accommodation (End of tour) </ng-container>
+              }
             </p>
+            @if (day.hotelLink.length != 1) {
             <p class="day__p">
-              <i class="fa-solid fa-chevron-right"></i> Mid-range hotel located
-              in or near Arusha
+              <i class="fa-solid fa-chevron-right"></i>
+              <ng-container>
+                {{ day.hotelType }} located in or near {{ day.hotelLocation }}
+              </ng-container>
             </p>
+            }
           </div>
         </div>
         <div class="day__div">
           <span>Meals & Drinks:</span>
           <div>
             <p class="day__p">
-              <i class="fa-solid fa-chevron-right"></i> Dinner (Breakfast &
-              lunch not included)
+              <i class="fa-solid fa-chevron-right"></i>
+              <ng-container
+                *ngFor="let meal of day.includedMeals; let last = last"
+              >
+                {{ day.includedMeals }}<span *ngIf="!last">, </span>
+              </ng-container>
             </p>
             <p class="day__p">
-              <i class="fa-solid fa-chevron-right"></i> Drinks not included
+              <i class="fa-solid fa-chevron-right"></i>
+              <ng-container
+                *ngFor="let meal of day.includedDrinks; let last = last"
+              >
+                {{ day.includedDrinks }}<span *ngIf="!last">, </span>
+              </ng-container>
             </p>
           </div>
         </div>
       </div>
       <div class="day__img-container">
         <img
-          src="../../../assets/safari/Arrival.jpeg"
-          alt="Airport picture"
+          src="{{ day.dayImage }}"
+          alt="{{ day.dayTitle }}"
           class="day__img"
         />
       </div>
     </div>
+    }
   </div>
   <div class="prices">
     <div class="prices__important">
@@ -100,7 +111,10 @@
             <span class="prices__space">no time</span>
           </div>
           <div class="prices__cell prices__cell--first">
-            <span> Jan 1, 2024 - Dec 31, 2024 </span>
+            <span>
+              {{ currentSafari?.period?.from }} -
+              {{ currentSafari?.period?.to }}
+            </span>
           </div>
         </div>
         <div class="prices__column">
@@ -115,35 +129,45 @@
             <span class="prices__dark">2 people</span>
             <span class="prices__light"> 1 room</span>
           </div>
-          <div class="prices__cell">$5</div>
+          <div class="prices__cell">
+            {{ currentSafari?.rates?.twoPeopleOneRoom }}
+          </div>
         </div>
         <div class="prices__column">
           <div class="prices__cell">
             <span class="prices__dark">3 people</span>
             <span class="prices__light"> 2 rooms</span>
           </div>
-          <div class="prices__cell">$5</div>
+          <div class="prices__cell">
+            {{ currentSafari?.rates?.threePeopleTwoRooms }}
+          </div>
         </div>
         <div class="prices__column">
           <div class="prices__cell">
             <span class="prices__dark">4 people</span>
             <span class="prices__light"> 2 rooms</span>
           </div>
-          <div class="prices__cell">$5</div>
+          <div class="prices__cell">
+            {{ currentSafari?.rates?.fourPeopleTwoRooms }}
+          </div>
         </div>
         <div class="prices__column">
           <div class="prices__cell">
             <span class="prices__dark">5 people</span>
             <span class="prices__light"> 3 rooms</span>
           </div>
-          <div class="prices__cell">$5</div>
+          <div class="prices__cell">
+            {{ currentSafari?.rates?.fivePeopleThreeRooms }}
+          </div>
         </div>
         <div class="prices__column">
           <div class="prices__cell">
             <span class="prices__dark">6 people</span>
             <span class="prices__light"> 3 rooms</span>
           </div>
-          <div class="prices__cell">$5</div>
+          <div class="prices__cell">
+            {{ currentSafari?.rates?.sixPeopleThreeRooms }}
+          </div>
         </div>
         <div class="prices__column">
           <div class="prices__cell prices__cell--seven">

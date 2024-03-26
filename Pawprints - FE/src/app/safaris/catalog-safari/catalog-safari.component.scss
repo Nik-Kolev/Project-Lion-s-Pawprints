@@ -1,15 +1,22 @@
 .catalog-safari {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 8rem;
-  width: 80%;
-  margin: 5rem auto;
-  min-height: 35rem;
+  column-gap: 10rem;
+  row-gap: 8rem;
+  width: 90%;
+  margin: 4rem auto;
+  min-height: 30rem;
 }
 
 .safariCard {
-  box-shadow: var(--box-shadow-medium);
   border-radius: 10px;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease-in-out;
+  box-shadow: var(--box-shadow-medium);
+
+  &:hover {
+    box-shadow: var(--box-shadow-darker);
+  }
 }
 
 .header {
@@ -40,12 +47,12 @@
     left: 0;
     background: linear-gradient(
       to right,
-      rgb(0, 0, 0) 0%,
-      rgba(0, 0, 0) 20%,
-      rgba(0, 0, 0, 0.6) 45%,
-      rgba(0, 0, 0, 0) 80%
+      rgb(0, 0, 0, 0.4) 0%,
+      rgba(0, 0, 0, 0.3) 25%,
+      rgba(0, 0, 0, 0.2) 50%,
+      rgba(0, 0, 0, 0.1) 75%,
+      rgba(0, 0, 0, 0) 100%
     );
-    pointer-events: none;
   }
 
   &__h2 {
@@ -60,10 +67,10 @@
 }
 
 .safariInfo {
-  padding: 1rem 0 1rem 3rem;
+  padding: 2rem 0 2rem 3rem;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.2rem;
   font-size: 1.8rem;
 
   &__price {
@@ -84,8 +91,18 @@
   &__list {
     list-style: none;
   }
+
+  &__budget-type {
+    justify-self: flex-end;
+  }
 }
 
 .fa-chevron-right {
   margin-right: 8px;
+}
+
+.fa-circle {
+  margin: 0 0.5rem;
+  font-size: 0.8rem;
+  vertical-align: middle;
 }

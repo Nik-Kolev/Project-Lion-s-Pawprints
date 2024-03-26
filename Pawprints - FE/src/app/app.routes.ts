@@ -21,15 +21,15 @@ export const routes: Routes = [
     component: RegisterComponent,
   },
   {
-    path: 'test',
-    component: DisplaySafariComponent,
-  },
-  {
     path: 'createSafari',
     component: CreateSafariComponent,
   },
   {
     path: 'catalogSafari',
     component: CatalogSafariComponent,
+  },
+  {
+    path: 'safari/:safariId',
+    component: DisplaySafariComponent,
   },
 ];

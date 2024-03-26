@@ -55,6 +55,11 @@
               required
               formControlName="twoPeopleOneRoom"
             />
+            <div class="error-div">
+              <app-errors
+                [control]="safariForm.get(['rates', 'twoPeopleOneRoom'])"
+              ></app-errors>
+            </div>
           </div>
 
           <div class="form__group">
@@ -167,18 +172,26 @@
                 formControlName="dayTitle"
               />
             </div>
-            <div class="form__group">
-              <label for="description-{{ i }}" class="form__label"
-                >Description :</label
+            <div formArrayName="descriptions">
+              <div
+                *ngFor="
+                  let descriptionControl of getDescriptions(i).controls;
+                  let j = index
+                "
               >
-              <input
-                type="text"
-                class="form__input"
-                placeholder="Activities during the day"
-                id="description-{{ i }}"
-                required
-                formControlName="description"
-              />
+                <div class="form-group">
+                  <label for="description-{{ i }}-{{ j }}" class="form__label"
+                    >Description {{ j + 1 }}:</label
+                  >
+                  <input
+                    id="description-{{ i }}-{{ j }}"
+                    type="text"
+                    class="form__input"
+                    placeholder="Description {{ j + 1 }}"
+                    [formControlName]="j"
+                  />
+                </div>
+              </div>
             </div>
             <div class="form__group">
               <label for="mainDestination-{{ i }}" class="form__label"
@@ -193,22 +206,21 @@
                 formControlName="mainDestination"
               />
             </div>
-
-            <div class="form__group">
-              <label for="accommodationName-{{ i }}" class="form__label"
-                >Hotel Name :</label
-              >
-              <input
-                type="text"
-                class="form__input"
-                id="accommodationName-{{ i }}"
-                formControlName="hotelName"
-                placeholder="e.g. Ngorongoro Lodge"
-              />
-            </div>
           </div>
           <div>
             <div>
+              <div class="form__group">
+                <label for="accommodationName-{{ i }}" class="form__label"
+                  >Hotel Name :</label
+                >
+                <input
+                  type="text"
+                  class="form__input"
+                  id="accommodationName-{{ i }}"
+                  formControlName="hotelName"
+                  placeholder="e.g. Ngorongoro Lodge"
+                />
+              </div>
               <div class="form__group">
                 <label for="accommodationType-{{ i }}" class="form__label"
                   >Hotel Type :</label
