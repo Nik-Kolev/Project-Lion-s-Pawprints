@@ -14,7 +14,7 @@ const safariSchema = new mongoose.Schema({
   days: [
     {
       dayTitle: { type: String },
-      descriptions: { type: String },
+      descriptions: [{ type: String }],
       mainDestination: { type: String },
       hotelName: { type: String },
       hotelLink: { type: String },

@@ -31,4 +31,29 @@ safariController.post("/updateSafari", isAuthorized, async (req, res) => {
   }
 });
 
+safariController.get("/fetchCatalogSafaris", async (req, res) => {
+  try {
+    const safaris = await safariModel.find();
+    res.status(200).send(safaris);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("error fetching safaris");
+    errorHandler(error);
+  }
+});
+
+safariController.get("/fetchSafariById/:id", async (req, res) => {
+  try {
+    console.log("asd");
+    const { id } = req.params;
+    console.log(id);
+    const safari = await safariModel.findOne({ _id: id });
+    res.status(200).send(safari);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("error fetching safaris");
+    errorHandler(error);
+  }
+});
+
 module.exports = safariController;
