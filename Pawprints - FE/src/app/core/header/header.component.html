@@ -26,6 +26,11 @@
       <li class="nav__item">
         <a routerLink="/Blog" class="nav__link link">Blog</a>
       </li>
+      @if(user?.admin){
+      <li class="nav__item">
+        <a class="nav__link link" routerLink="/createSafari">Create Safari</a>
+      </li>
+      } @if (!user) {
       <li class="nav__item">
         <a class="nav__link nav__login link" routerLink="/login">Login</a>
       </li>
@@ -34,9 +39,11 @@
           >Sign up</a
         >
       </li>
+      } @else {
       <li class="nav__item">
         <a href="#" class="nav__link link" (click)="onLogout($event)">Logout</a>
       </li>
+      }
     </ul>
   </nav>
 </header>

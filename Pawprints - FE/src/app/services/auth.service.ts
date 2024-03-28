@@ -7,7 +7,8 @@ import { ToastrService } from 'ngx-toastr';
 
 const { apiURL } = environment;
 
-interface User {
+export interface User {
+  _id: string;
   email: string;
   password: string;
   admin: boolean;
@@ -83,5 +84,9 @@ export class AuthService {
         complete: () => this.toast.success('Logged out successfully.'),
         error: (error) => this.toast.error(error.error.error),
       });
+  }
+
+  isAdmin(): boolean | undefined {
+    return this.user?.admin;
   }
 }

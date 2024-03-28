@@ -10,11 +10,15 @@ import { Router, RouterLink } from '@angular/router';
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
-  constructor(private auth: AuthService, private route: Router) {}
+  constructor(private authService: AuthService, private route: Router) {}
 
   onLogout(e: Event): void {
     e.preventDefault();
-    this.auth.logout();
+    this.authService.logout();
     this.route.navigate(['/']);
+  }
+
+  get user() {
+    return this.authService.user;
   }
 }
