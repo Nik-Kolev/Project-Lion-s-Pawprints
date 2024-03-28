@@ -142,23 +142,17 @@
       <h4 class="safariForm__subheader">Day Information :</h4>
       <div *ngFor="let day of days.controls; let i = index" [formGroupName]="i">
         <div class="day-grid" @carouselAnimation>
+          <div class="form__group">
+            <label class="form__label form__label--margin"
+              >Day {{ i + 1 }}</label
+            >
+          </div>
           <div class="border">
-            <div class="form__group">
-              <i
-                *ngIf="i === currentDay"
-                @arrowAnimation
-                class="fa-solid fa-angles-right day__icon"
-              ></i>
-              <label for="day-{{ i }}" class="form__label">Day : </label>
-              <input
-                type="text"
-                class="form__input"
-                placeholder="{{ 'Day ' + (i + 1) }} of the tour"
-                id="day-{{ i }}"
-                required
-                formControlName="day"
-              />
-            </div>
+            <i
+              *ngIf="i === currentDay"
+              @arrowAnimation
+              class="fa-solid fa-angles-right day__icon"
+            ></i>
             <div class="form__group">
               <label for="dayTitle-{{ i }}" class="form__label"
                 >Day Title :

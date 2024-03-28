@@ -32,4 +32,8 @@ export const routes: Routes = [
     path: 'safari/:safariId',
     component: DisplaySafariComponent,
   },
+  {
+    path: 'editSafari/:safariId',
+    component: CreateSafariComponent,
+  },
 ];

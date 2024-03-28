@@ -187,4 +187,11 @@
       ></a>
     </div>
   </div>
+  @if (user?.admin && currentSafari?.owner == user?._id) {
+  <div class="quote__btn">
+    <a class="btn" routerLink="/editSafari/{{ currentSafari?._id }}"
+      >Edit Safaris</a
+    >
+  </div>
+  }
 </section>

@@ -5,8 +5,8 @@ import { environment } from '../../environments/environment';
 const { apiURL } = environment;
 
 export interface Safari {
-  _id?: string;
-  safariId?: string;
+  owner: string;
+  _id: string;
   safariTitle: string;
   safariImage: '';
   days: Day[];
@@ -48,10 +48,14 @@ export class SafariService {
     });
   }
 
-  updateSafari(safari: Safari) {
-    return this.http.post<Safari>(`${apiURL}/safari/updateSafari`, safari, {
-      withCredentials: true,
-    });
+  updateSafari(safariId: string | null, safari: Safari) {
+    return this.http.post<Safari>(
+      `${apiURL}/safari/updateSafari/${safariId}`,
+      safari,
+      {
+        withCredentials: true,
+      }
+    );
   }
 
   fetchCatalogSafaris() {
