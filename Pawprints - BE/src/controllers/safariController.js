@@ -7,7 +7,6 @@ safariController.post("/createSafari", isAuthorized, async (req, res) => {
   try {
     const { safariTitle, safariImage, days, period, rates } = req.body;
     const newSafari = await safariModel.create({ owner: req.user._id, safariTitle, safariImage, days, period, rates });
-
     res.status(201).send(newSafari);
   } catch (error) {
     res.status(500).send({ message: "Error creating safari", error: error.message });
@@ -15,15 +14,19 @@ safariController.post("/createSafari", isAuthorized, async (req, res) => {
   }
 });
 
-safariController.post("/updateSafari", isAuthorized, async (req, res) => {
+safariController.post("/updateSafari/:id", isAuthorized, async (req, res) => {
   try {
-    const { safariId, safariTitle, safariImage, days, period, rates } = req.body;
-    console.log(req.user._id);
-    const updatedSafari = await safariModel.findByIdAndUpdate(
-      safariId,
-      { safariTitle, safariImage, days, period, rates },
-      { new: true }
-    );
+    const { id } = req.params;
+    const { safariTitle, safariImage, days, period, rates } = req.body;
+
+    const currentSafari = await safariModel.findById(id);
+    const newDays = days.map((day, index) => {
+      if (day.dayImage === "") {
+        day.dayImage = currentSafari.days[index].dayImage;
+      }
+      return day;
+    });
+    const updatedSafari = await safariModel.findByIdAndUpdate({ _id: id }, { safariTitle, safariImage, days: newDays, period, rates }, { new: true });
     res.status(201).send(updatedSafari);
   } catch (error) {
     res.status(500).send({ message: "Error creating safari", error: error.message });
@@ -44,9 +47,7 @@ safariController.get("/fetchCatalogSafaris", async (req, res) => {
 
 safariController.get("/fetchSafariById/:id", async (req, res) => {
   try {
-    console.log("asd");
     const { id } = req.params;
-    console.log(id);
     const safari = await safariModel.findOne({ _id: id });
     res.status(200).send(safari);
   } catch (error) {
