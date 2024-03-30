@@ -43,11 +43,7 @@ export class AuthService {
 
   register(email: string, password: string, rePass: string) {
     return this.http
-      .post<User>(
-        `${apiURL}/users/register`,
-        { email, password, rePass },
-        { withCredentials: true }
-      )
+      .post<User>(`${apiURL}/users/register`, { withCredentials: true })
       .pipe(
         tap((user) => {
           this.user$$.next(user);
@@ -58,11 +54,7 @@ export class AuthService {
 
   login(email: string, password: string) {
     return this.http
-      .post<User>(
-        `${apiURL}/users/login`,
-        { email, password },
-        { withCredentials: true }
-      )
+      .post<User>(`${apiURL}/users/login`, { email, password })
       .pipe(
         tap((user) => {
           this.user$$.next(user);
@@ -73,7 +65,7 @@ export class AuthService {
 
   logout(): void {
     this.http
-      .post<User>(`${apiURL}/users/logout`, {}, { withCredentials: true })
+      .post<User>(`${apiURL}/users/logout`, {})
       .pipe(
         tap(() => {
           this.user$$.next(undefined);

@@ -37,9 +37,11 @@ safariController.post("/updateSafari/:id", isAuthorized, async (req, res) => {
 safariController.get("/fetchCatalogSafaris", async (req, res) => {
   try {
     const safaris = await safariModel.find();
-    res.status(200).send(safaris);
+
+    setTimeout(() => {
+      res.status(200).send(safaris);
+    }, 1000);
   } catch (error) {
-    console.log(error);
     res.status(500).send("error fetching safaris");
     errorHandler(error);
   }
@@ -51,8 +53,7 @@ safariController.get("/fetchSafariById/:id", async (req, res) => {
     const safari = await safariModel.findOne({ _id: id });
     res.status(200).send(safari);
   } catch (error) {
-    console.log(error);
-    res.status(500).send("error fetching safaris");
+    res.status(500).send(`error fetching safari with id: ${id}`);
     errorHandler(error);
   }
 });

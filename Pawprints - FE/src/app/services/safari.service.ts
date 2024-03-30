@@ -51,23 +51,17 @@ export class SafariService {
   updateSafari(safariId: string | null, safari: Safari) {
     return this.http.post<Safari>(
       `${apiURL}/safari/updateSafari/${safariId}`,
-      safari,
-      {
-        withCredentials: true,
-      }
+      safari
     );
   }
 
   fetchCatalogSafaris() {
-    return this.http.get<Safari[]>(`${apiURL}/safari/fetchCatalogSafaris`, {
-      withCredentials: true,
-    });
+    return this.http.get<Safari[]>(`${apiURL}/safari/fetchCatalogSafaris`);
   }
 
   fetchSafariById(safariId: string) {
     return this.http.get<Safari>(
-      `${apiURL}/safari/fetchSafariById/${safariId}`,
-      { withCredentials: true }
+      `${apiURL}/safari/fetchSafariById/${safariId}`
     );
   }
 }
