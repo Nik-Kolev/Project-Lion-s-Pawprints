@@ -1,7 +1,18 @@
 import { Day } from './../../services/safari.service';
-import { arrowAnimation, carouselAnimation } from './../../animations';
+import {
+  arrowAnimation,
+  carouselAnimation,
+  displaySafari,
+} from './../../animations';
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  OnInit,
+  QueryList,
+  ViewChildren,
+} from '@angular/core';
 import {
   FormArray,
   FormBuilder,
@@ -15,7 +26,8 @@ import { delay, forkJoin, of, switchMap, concatMap, concat, map } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { positiveNumber } from '../../validators/positiveNumber';
 import { ErrorsComponent } from '../../shared/errors/errors.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { scrollTo } from '../../shared/scrollTo';
 
 interface ImageParams {
   event: any;
@@ -34,11 +46,13 @@ interface DayImageFile {
   imports: [ReactiveFormsModule, CommonModule, ErrorsComponent],
   templateUrl: './create-safari.component.html',
   styleUrl: './create-safari.component.scss',
-  animations: [arrowAnimation, carouselAnimation],
+  animations: [arrowAnimation, carouselAnimation, displaySafari],
 })
 export class CreateSafariComponent implements OnInit {
+  @ViewChildren('dayElement') dayElements!: QueryList<ElementRef>;
+
   safariForm!: FormGroup;
-  currentDay: number = 0;
+  currentDay!: number;
   isEditMode: boolean = false;
   safariId: string | null = null;
 
@@ -52,7 +66,9 @@ export class CreateSafariComponent implements OnInit {
     private supabase: SupabaseService,
     private safariService: SafariService,
     private toastService: ToastrService,
-    private route: ActivatedRoute
+    private activeRoute: ActivatedRoute,
+    private router: Router,
+    private cd: ChangeDetectorRef
   ) {
     this.safariForm = this.fb.group({
       safariTitle: [''],
@@ -102,11 +118,16 @@ export class CreateSafariComponent implements OnInit {
 
     this.currentDay = this.days.controls.length;
     this.days.push(dayFormGroup);
+    this.cd.detectChanges();
+    setTimeout(() => {
+      scrollTo(this.currentDay, this.dayElements);
+    }, 0);
   }
 
   populateSafari(safariId: string) {
     this.safariService.fetchSafariById(safariId).subscribe({
       next: (safari) => {
+        this.currentDay = safari.days.length - 1;
         this.safariForm.patchValue({
           safariTitle: safari.safariTitle,
           period: {
@@ -160,6 +181,12 @@ export class CreateSafariComponent implements OnInit {
     this.selectedDayImages.splice(index, 1);
     this.days.removeAt(index);
     this.currentDay = this.days.controls.length - 1;
+
+    if (index > 0) {
+      scrollTo(this.currentDay, this.dayElements);
+    } else {
+      scrollTo(0, this.dayElements);
+    }
   }
 
   onImagePreview({ event, type, dayId }: ImageParams): void {
@@ -189,7 +216,7 @@ export class CreateSafariComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.safariId = this.route.snapshot.paramMap.get('safariId');
+    this.safariId = this.activeRoute.snapshot.paramMap.get('safariId');
     if (this.safariId) {
       this.isEditMode = true;
       this.safariForm.reset();
@@ -214,7 +241,7 @@ export class CreateSafariComponent implements OnInit {
     //   console.log(this.safariForm.value);
     //   return;
     // } else {
-
+    console.log(this.safariForm.valid);
     const headerImage = this.selectedSafariImage
       ? this.supabase.supabaseUploader(
           this.selectedSafariImage,
@@ -265,7 +292,14 @@ export class CreateSafariComponent implements OnInit {
         })
       )
       .subscribe({
-        next: () => this.toastService.success('Safari created.'),
+        next: () => {
+          if (this.isEditMode) {
+            this.toastService.success('Safari successfully edited.');
+          } else {
+            this.toastService.success('Safari successfully created.');
+          }
+          this.router.navigate(['/catalogSafari']);
+        },
         error: (err) => this.toastService.error(err),
       });
   }

@@ -17,9 +17,8 @@ export class CatalogSafariComponent implements OnInit {
 
   ngOnInit(): void {
     this.safariService.fetchCatalogSafaris().subscribe({
-      next: (x) => {
-        this.safariList = x;
-        console.log(x);
+      next: (safari) => {
+        this.safariList = safari;
       },
       error: (error) => console.log(error),
     });
@@ -37,7 +36,6 @@ export class CatalogSafariComponent implements OnInit {
   }
 
   navigateToDetails(safariId: string | undefined): void {
-    console.log(safariId);
     this.router.navigate([`/safari/${safariId}`]);
   }
 }

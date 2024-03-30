@@ -1,4 +1,4 @@
-<section class="safariForm">
+<section class="safariForm" @displaySafari>
   <form [formGroup]="safariForm" (ngSubmit)="onSubmit()">
     <div class="safariForm__top--container">
       <div>
@@ -140,7 +140,11 @@
 
     <div class="safariForm__bottom--container" formArrayName="days">
       <h4 class="safariForm__subheader">Day Information :</h4>
-      <div *ngFor="let day of days.controls; let i = index" [formGroupName]="i">
+      <div
+        *ngFor="let day of days.controls; let i = index"
+        [formGroupName]="i"
+        #dayElement
+      >
         <div class="day-grid" @carouselAnimation>
           <div class="form__group">
             <label class="form__label form__label--margin"
@@ -318,6 +322,7 @@
               type="button"
               class="day-grid__btn day-grid__btn--remove"
               (click)="removeDay(i)"
+              [disabled]="days.controls.length < 2"
             >
               Remove Day {{ i + 1 }}
             </button>

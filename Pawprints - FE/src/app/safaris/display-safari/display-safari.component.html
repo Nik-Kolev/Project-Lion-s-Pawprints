@@ -1,4 +1,4 @@
-<section class="display-safari">
+<section class="display-safari" @displaySafari>
   <header class="header">
     <div class="header__img-container">
       <img
@@ -189,9 +189,7 @@
   </div>
   @if (user?.admin && currentSafari?.owner == user?._id) {
   <div class="quote__btn">
-    <a class="btn" routerLink="/editSafari/{{ currentSafari?._id }}"
-      >Edit Safaris</a
-    >
+    <a class="btn" (click)="editSafari()">Edit Safaris</a>
   </div>
   }
 </section>

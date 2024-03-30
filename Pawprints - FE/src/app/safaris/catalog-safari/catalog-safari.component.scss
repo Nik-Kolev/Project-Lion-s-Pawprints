@@ -1,16 +1,17 @@
 .catalog-safari {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  column-gap: 10rem;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 8rem;
   row-gap: 8rem;
   width: 90%;
   margin: 4rem auto;
-  min-height: 30rem;
+  min-height: calc(100vh - 31vh);
 }
 
 .safariCard {
   border-radius: 10px;
   cursor: pointer;
+  width: auto;
   transition: box-shadow 0.3s ease-in-out;
   box-shadow: var(--box-shadow-medium);
 

@@ -15,3 +15,16 @@ export const arrowAnimation = trigger('arrowAnimation', [
   ]),
   transition(':leave', [animate('500ms', style({ opacity: 0 }))]),
 ]);
+
+export const displaySafari = trigger('displaySafari', [
+  transition('* => *', [
+    style({ opacity: 0, transform: 'scale(0.9)' }),
+    animate('300ms ease-in-out', style({ opacity: 1, transform: 'scale(1)' })),
+  ]),
+  transition('* => *', [
+    animate(
+      '300ms ease-in-out',
+      style({ opacity: 0, transform: 'scale(0.9)' })
+    ),
+  ]),
+]);
