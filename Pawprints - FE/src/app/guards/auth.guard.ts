@@ -8,10 +8,7 @@ export const authGuard: CanActivateFn = (route, state) => {
   const toastr = inject(ToastrService);
   const router = inject(Router);
 
-  if (
-    localStorage.getItem('user') &&
-    localStorage.getItem('user').admin == true
-  ) {
+  if (localStorage.getItem('user') && localStorage.getItem('user').admin) {
     return true;
   }
 

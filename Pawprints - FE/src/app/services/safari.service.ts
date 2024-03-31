@@ -43,9 +43,7 @@ export class SafariService {
   constructor(private http: HttpClient) {}
 
   createSafari(safari: Safari) {
-    return this.http.post<Safari>(`${apiURL}/safari/createSafari`, safari, {
-      withCredentials: true,
-    });
+    return this.http.post<Safari>(`${apiURL}/safari/createSafari`, safari);
   }
 
   updateSafari(safariId: string | null, safari: Safari) {
@@ -63,5 +61,9 @@ export class SafariService {
     return this.http.get<Safari>(
       `${apiURL}/safari/fetchSafariById/${safariId}`
     );
+  }
+
+  deleteSafari(safariId: string | undefined) {
+    return this.http.get(`${apiURL}/safari/deleteSafari/${safariId}`);
   }
 }

@@ -43,7 +43,7 @@ export class AuthService {
 
   register(email: string, password: string, rePass: string) {
     return this.http
-      .post<User>(`${apiURL}/users/register`, { withCredentials: true })
+      .post<User>(`${apiURL}/users/register`, { email, password, rePass })
       .pipe(
         tap((user) => {
           this.user$$.next(user);
@@ -74,11 +74,6 @@ export class AuthService {
       )
       .subscribe({
         complete: () => this.toast.success('Logged out successfully.'),
-        error: (error) => this.toast.error(error.error.error),
       });
-  }
-
-  isAdmin(): boolean | undefined {
-    return this.user?.admin;
   }
 }

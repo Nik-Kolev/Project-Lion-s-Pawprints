@@ -26,7 +26,7 @@
       <li class="nav__item">
         <a routerLink="/Blog" class="nav__link link">Blog</a>
       </li>
-      @if(user?.admin == true){
+      @if(user?.admin){
       <li class="nav__item">
         <a class="nav__link link" routerLink="/createSafari">Create Safari</a>
       </li>

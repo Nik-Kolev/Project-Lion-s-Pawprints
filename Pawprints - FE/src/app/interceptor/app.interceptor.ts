@@ -15,7 +15,7 @@ export const appInterceptor: HttpInterceptorFn = (req, next) => {
     withCredentials: true,
   });
 
-  if (req.url.startsWith(`${environment.apiURL}/safari/fetchCatalogSafaris`)) {
+  if (req.url.startsWith(`${environment.apiURL}/safari/`)) {
     spinnerService.changeLoadingState(true);
   }
 
@@ -26,6 +26,9 @@ export const appInterceptor: HttpInterceptorFn = (req, next) => {
         case 403:
           toastr.error(error.error.error);
           router.navigate(['/login']);
+          break;
+        case 409:
+          toastr.error(error.error.error);
           break;
         default:
           toastr.error('Oops, something went wrong.');
