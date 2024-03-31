@@ -10,8 +10,8 @@ const { apiURL } = environment;
 export interface User {
   _id: string;
   email: string;
-  password: string;
-  admin: boolean;
+  password?: string;
+  admin?: boolean;
 }
 
 @Injectable({

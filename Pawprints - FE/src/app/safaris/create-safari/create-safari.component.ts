@@ -119,9 +119,26 @@ export class CreateSafariComponent implements OnInit {
     this.currentDay = this.days.controls.length;
     this.days.push(dayFormGroup);
     this.cd.detectChanges();
-    setTimeout(() => {
+    if (this.currentDay == 0) {
+      window.scrollTo(0, 0);
+    } else {
+      setTimeout(() => {
+        scrollTo(this.currentDay, this.dayElements);
+      }, 0);
+    }
+  }
+
+  removeDay(index: number): void {
+    this.daySafariImages.splice(index, 1);
+    this.selectedDayImages.splice(index, 1);
+    this.days.removeAt(index);
+    this.currentDay = this.days.controls.length - 1;
+
+    if (index > 0) {
       scrollTo(this.currentDay, this.dayElements);
-    }, 0);
+    } else {
+      scrollTo(0, this.dayElements);
+    }
   }
 
   populateSafari(safariId: string) {
@@ -176,19 +193,6 @@ export class CreateSafariComponent implements OnInit {
     });
   }
 
-  removeDay(index: number): void {
-    this.daySafariImages.splice(index, 1);
-    this.selectedDayImages.splice(index, 1);
-    this.days.removeAt(index);
-    this.currentDay = this.days.controls.length - 1;
-
-    if (index > 0) {
-      scrollTo(this.currentDay, this.dayElements);
-    } else {
-      scrollTo(0, this.dayElements);
-    }
-  }
-
   onImagePreview({ event, type, dayId }: ImageParams): void {
     const file: File = event.target.files[0];
 
@@ -216,6 +220,7 @@ export class CreateSafariComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // window.scrollTo({ top: 0 });
     this.safariId = this.activeRoute.snapshot.paramMap.get('safariId');
     if (this.safariId) {
       this.isEditMode = true;

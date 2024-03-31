@@ -9,7 +9,7 @@ import { routes } from './app.routes';
 import { provideToastr } from 'ngx-toastr';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { appInterceptor } from './app.interceptor';
+import { appInterceptor } from './interceptor/app.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [

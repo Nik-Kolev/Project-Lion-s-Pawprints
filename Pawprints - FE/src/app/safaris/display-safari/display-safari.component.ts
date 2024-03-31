@@ -24,6 +24,7 @@ export class DisplaySafariComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    window.scrollTo({ top: 0 });
     const id = this.activeRoute.snapshot.params['safariId'];
     this.safariService.fetchSafariById(id).subscribe({
       next: (safari) => {
@@ -39,6 +40,5 @@ export class DisplaySafariComponent implements OnInit {
 
   editSafari() {
     this.router.navigate([`editSafari/${this.currentSafari?._id}`]);
-    window.scrollTo(0, 0);
   }
 }
