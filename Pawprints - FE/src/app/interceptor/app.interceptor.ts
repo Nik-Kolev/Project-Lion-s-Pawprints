@@ -11,9 +11,11 @@ export const appInterceptor: HttpInterceptorFn = (req, next) => {
   const toastr = inject(ToastrService);
   const router = inject(Router);
 
-  req = req.clone({
-    withCredentials: true,
-  });
+  if (req.url.startsWith(`${environment.apiURL}`)) {
+    req = req.clone({
+      withCredentials: true,
+    });
+  }
 
   if (req.url.startsWith(`${environment.apiURL}/safari/`)) {
     spinnerService.changeLoadingState(true);

@@ -64,6 +64,6 @@ export class SafariService {
   }
 
   deleteSafari(safariId: string | undefined) {
-    return this.http.get(`${apiURL}/safari/deleteSafari/${safariId}`);
+    return this.http.delete(`${apiURL}/safari/deleteSafari/${safariId}`);
   }
 }

@@ -62,7 +62,7 @@ safariController.get("/fetchSafariById/:id", async (req, res) => {
   }
 });
 
-safariController.get("/deleteSafari/:id", isAuthorized, async (req, res) => {
+safariController.delete("/deleteSafari/:id", isAuthorized, async (req, res) => {
   try {
     const { id } = req.params;
     const safari = await safariModel.findByIdAndDelete({ _id: id });
