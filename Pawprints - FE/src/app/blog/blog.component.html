@@ -1,0 +1,25 @@
+<section class="blogs">
+  <h2 class="heading-secondary">Blog Posts</h2>
+  <div class="blogs__grid">
+    @for (article of articles; track $index) {
+    <div class="blogs__container">
+      <div class="blogs__img-container">
+        <img src="{{ article.urlToImage }}" alt="{{ article.urlToImage }}" />
+      </div>
+      <div class="blogs__info">
+        <h3 class="blogs__h3">{{ article.title }}</h3>
+        <p class="blogs__content">
+          {{ article.content | sliceContent }} ...
+          <a href="{{ article.url }}" target="_blank" class="link"
+            >&nbsp; Read more</a
+          >
+        </p>
+        <div class="blogs__author-source">
+          <p class="blogs__p">Author:&nbsp; {{ article.author }}</p>
+          <p class="blogs__p">Source:&nbsp; {{ article.source.name }}</p>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+</section>

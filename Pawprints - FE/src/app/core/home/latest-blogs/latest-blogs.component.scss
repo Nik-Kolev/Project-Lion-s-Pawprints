@@ -2,28 +2,29 @@
   display: flex;
   flex-direction: column;
   gap: 4rem;
+
   margin-bottom: 10rem;
 
   &__container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 5rem;
-    height: 25rem;
     text-decoration: none;
   }
 
   &__single {
-    background: linear-gradient(
-        to bottom,
-        rgba(0, 0, 0, 0.3) 0%,
-        rgba(0, 0, 0, 0.4) 50%,
-        rgba(0, 0, 0, 0.5) 100%
-      ),
-      url("../../../../assets/top-rated/tanzania.jpg") no-repeat center/cover;
-    border-radius: 10px;
     box-shadow: var(--box-shadow-dark);
     position: relative;
     transition: box-shadow 0.3s ease-in-out;
+    text-decoration: none;
+    display: flex;
+    border-radius: 10px;
+
+    & img {
+      width: 100%;
+      height: 25rem;
+      border-radius: 10px;
+    }
 
     &:hover {
       box-shadow: 0 10px 20px rgba(0, 0, 0, 0.43), 0 6px 6px rgba(0, 0, 0, 0.23);

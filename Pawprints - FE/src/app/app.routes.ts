@@ -8,6 +8,7 @@ import { CatalogSafariComponent } from './safaris/catalog-safari/catalog-safari.
 import { ErrorComponent } from './core/error/error.component';
 import { guestGuard } from './guards/guest.guard';
 import { authGuard } from './guards/auth.guard';
+import { BlogComponent } from './blog/blog.component';
 
 export const routes: Routes = [
   {
@@ -24,6 +25,10 @@ export const routes: Routes = [
     path: 'register',
     component: RegisterComponent,
     canActivate: [guestGuard],
+  },
+  {
+    path: 'Blog',
+    component: BlogComponent,
   },
   {
     path: 'createSafari',

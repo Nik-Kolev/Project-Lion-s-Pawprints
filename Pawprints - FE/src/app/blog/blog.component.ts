@@ -1,18 +1,20 @@
-import { Article } from './../../../services/news.service';
+import { Article } from './../services/news.service';
 import { Component, OnInit } from '@angular/core';
-import { newsService } from '../../../services/news.service';
+import { newsService } from '../services/news.service';
+import { CommonModule } from '@angular/common';
+import { SliceContentPipe } from '../pipes/slice-content.pipe';
 import { map } from 'rxjs';
-import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-latest-blogs',
+  selector: 'app-blog',
   standalone: true,
-  imports: [RouterLink],
-  templateUrl: './latest-blogs.component.html',
-  styleUrl: './latest-blogs.component.scss',
+  imports: [CommonModule, SliceContentPipe],
+  templateUrl: './blog.component.html',
+  styleUrl: './blog.component.scss',
 })
-export class LatestBlogsComponent implements OnInit {
+export class BlogComponent implements OnInit {
   articles: Article[] | undefined;
+
   constructor(private newsService: newsService) {}
 
   ngOnInit(): void {
@@ -24,9 +26,7 @@ export class LatestBlogsComponent implements OnInit {
       .getSafariNews()
       .pipe(
         map((response) =>
-          response.articles
-            .slice(1, 4)
-            .filter((article) => article.title !== '[Removed]')
+          response.articles.filter((article) => article.title !== '[Removed]')
         )
       )
       .subscribe({
