@@ -181,15 +181,17 @@
     <div class="prices__table--info">
       *n/a = not available. This tour is unavailable for solo travelers.
     </div>
+    @if (user?.admin && currentSafari?.owner == user?._id) {
+    <div class="admin__btn">
+      <a class="btn" (click)="editSafari()">Edit Safari</a>
+      <a class="btn" (click)="deleteSafari()">Delete Safari</a>
+    </div>
+    } @else {
     <div class="quote__btn">
       <a href="" class="btn"
         >Get Free Quote ! <i class="fa-solid fa-angles-right"></i
       ></a>
     </div>
+    }
   </div>
-  @if (user?.admin && currentSafari?.owner == user?._id) {
-  <div class="quote__btn">
-    <a class="btn" (click)="editSafari()">Edit Safaris</a>
-  </div>
-  }
 </section>

@@ -7,7 +7,9 @@ safariController.post("/createSafari", isAuthorized, async (req, res) => {
   try {
     const { safariTitle, safariImage, days, period, rates } = req.body;
     const newSafari = await safariModel.create({ owner: req.user._id, safariTitle, safariImage, days, period, rates });
-    res.status(201).send(newSafari);
+    setTimeout(() => {
+      res.status(200).send(newSafari);
+    }, 1000);
   } catch (error) {
     res.status(500).send({ message: "Error creating safari", error: error.message });
     errorHandler(error);
@@ -27,7 +29,9 @@ safariController.post("/updateSafari/:id", isAuthorized, async (req, res) => {
       return day;
     });
     const updatedSafari = await safariModel.findByIdAndUpdate({ _id: id }, { safariTitle, safariImage, days: newDays, period, rates }, { new: true });
-    res.status(201).send(updatedSafari);
+    setTimeout(() => {
+      res.status(200).send(updatedSafari);
+    }, 1000);
   } catch (error) {
     res.status(500).send({ message: "Error creating safari", error: error.message });
     errorHandler(error);
@@ -53,7 +57,18 @@ safariController.get("/fetchSafariById/:id", async (req, res) => {
     const safari = await safariModel.findOne({ _id: id });
     res.status(200).send(safari);
   } catch (error) {
-    res.status(500).send(`error fetching safari with id: ${id}`);
+    res.status(500).send(`Error fetching safari with id: ${id}.`);
+    errorHandler(error);
+  }
+});
+
+safariController.get("/deleteSafari/:id", isAuthorized, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const safari = await safariModel.findByIdAndDelete({ _id: id });
+    res.status(200).send(safari);
+  } catch (error) {
+    res.status(500).send(error);
     errorHandler(error);
   }
 });

@@ -41,4 +41,12 @@ export class DisplaySafariComponent implements OnInit {
   editSafari() {
     this.router.navigate([`editSafari/${this.currentSafari?._id}`]);
   }
+
+  deleteSafari() {
+    this.safariService.deleteSafari(this.currentSafari?._id).subscribe({
+      next: () => {
+        this.router.navigate(['/catalogSafari']);
+      },
+    });
+  }
 }

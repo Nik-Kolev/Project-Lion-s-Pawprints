@@ -244,7 +244,7 @@
 }
 
 .quote__btn {
-  margin-top: 4rem;
+  margin-top: 1rem;
   text-align: center;
 
   & i {
@@ -265,4 +265,21 @@
 
 .fa-chevron-right {
   margin-right: 8px;
+}
+
+.admin__btn {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 1rem;
+  transition: 0.2s ease-in-out;
+
+  & a:hover {
+    background-color: var(--color-primary-darker);
+    color: var(--color-secondary-darker);
+  }
+
+  & a:active {
+    transform: translateY(2px);
+  }
 }
