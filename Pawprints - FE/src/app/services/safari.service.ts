@@ -4,6 +4,12 @@ import { environment } from '../../environments/environment';
 
 const { apiURL } = environment;
 
+export interface SafariCatalog {
+  safaris: Safari[];
+  totalNumberOfPages: number;
+  currentPage: number;
+}
+
 export interface Safari {
   owner: string;
   _id: string;
@@ -53,8 +59,12 @@ export class SafariService {
     );
   }
 
-  fetchCatalogSafaris() {
-    return this.http.get<Safari[]>(`${apiURL}/safari/fetchCatalogSafaris`);
+  fetchCatalogSafaris(page: number) {
+    const params = { page: page.toString() };
+    return this.http.get<SafariCatalog>(
+      `${apiURL}/safari/fetchCatalogSafaris`,
+      { params }
+    );
   }
 
   fetchSafariById(safariId: string) {

@@ -40,10 +40,26 @@ safariController.post("/updateSafari/:id", isAuthorized, async (req, res) => {
 
 safariController.get("/fetchCatalogSafaris", async (req, res) => {
   try {
-    const safaris = await safariModel.find();
+    let page = Number(req.query.page);
+    page < 1 || isNaN(page) ? (page = 1) : page;
 
+    const limit = 12;
+
+    const totalNumberOfSafaris = await safariModel.countDocuments();
+    const totalNumberOfPages = Math.ceil(totalNumberOfSafaris / limit);
+
+    page > totalNumberOfPages ? (page = totalNumberOfPages) : page;
+
+    const skip = (page - 1) * limit;
+
+    const safaris = await safariModel.find().limit(limit).skip(skip);
+    const data = {
+      safaris,
+      totalNumberOfPages,
+      currentPage: page,
+    };
     setTimeout(() => {
-      res.status(200).send(safaris);
+      res.status(200).send(data);
     }, 1000);
   } catch (error) {
     res.status(500).send("error fetching safaris");
