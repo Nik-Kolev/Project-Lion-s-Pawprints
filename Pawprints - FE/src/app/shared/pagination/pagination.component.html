@@ -1,0 +1,23 @@
+@if (totalPages) {
+<section class="pagination">
+  <ul class="pagination__list">
+    @if (currentPage > 1) {
+    <li class="pagination__item">
+      <a class="pagination__link" (click)="navigate(currentPage - 1)"
+        >Previous</a
+      >
+    </li>
+    } @for (page of [].constructor(totalPages); track $index) {
+    <li class="pagination__item" [class.active]="currentPage === $index + 1">
+      <a (click)="navigate($index + 1)" class="pagination__link">{{
+        $index + 1
+      }}</a>
+    </li>
+    } @if (currentPage < totalPages) {
+    <li class="pagination__item">
+      <a class="pagination__link" (click)="navigate(currentPage + 1)">Next</a>
+    </li>
+    }
+  </ul>
+</section>
+}
