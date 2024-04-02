@@ -4,17 +4,41 @@ Safari Tales is a web application designed to provide users with detailed inform
 
 ## Table of Contents
 
--[](#)
+- [Safari Tales](#safari-tales)
+- [Table of Contents](#table-of-contents)
+- [Technologies Used](#technologies-used)
+  - [Backend Stack](#backend-stack)
+  - [Frontend Stack](#frontend-stack)
+- [Project Overview](#project-overview)
+- [Admin Capabilities](#admin-capabilities)
+  - [Product Management](#product-management)
+- [User Experience](#user-experience)
+  - [Product Interaction](#product-interaction)
+  - [Secure Authentication](#secure-authentication)
+  - [Intuitive Interface](#intuitive-interface)
+- [Project Structure](#project-structure)
+- [Installation and Running the Application](#installation-and-running-the-application)
+  - [Clone the Repository](#clone-the-repository)
+  - [Server Setup](#server-setup)
+  - [Client Setup](#client-setup)
+- [Platform Structure](#platform-structure)
+  - [Home](#home)
+  - [Safaris](#safaris)
+  - [Info & Contacts](#info--contacts)
+  - [Blog](#blog)
+  - [Create Safari](#create-safari)
+  - [User Panel](#user-panel)
+- [License](#license)
 
 ## Technologies used
 
 **Backend Stack**
 
-[![Node.js](https://img.shields.io/badge/Node.js-✓-green)]() [![Express.js](https://img.shields.io/badge/Express.js-✓-lightgrey)]()[![Mongoose](https://img.shields.io/badge/Mongoose-5.13.2-orange)]() [![JWT](https://img.shields.io/badge/JWT-✓-blue)]() [![Bcrypt](https://img.shields.io/badge/Bcrypt-✓-blueviolet)]()
+[![Node.js](https://img.shields.io/badge/Node.js-✓-green)]() [![Express.js](https://img.shields.io/badge/Express.js-✓-lightgrey)]() [![Mongoose](https://img.shields.io/badge/Mongoose-5.13.2-orange)]() [![JWT](https://img.shields.io/badge/JWT-✓-blue)]() [![Bcrypt](https://img.shields.io/badge/Bcrypt-✓-blueviolet)]()
 
 **Frontend Stack**
 
-[![Angular](https://img.shields.io/badge/Angular-✓-blue)]()[![Supabase](https://img.shields.io/badge/Supabase-✓-yellowgreen)]()[![TypeScript](https://img.shields.io/badge/TypeScript-✓-blue)]()[![News API](https://img.shields.io/badge/News_API-✓-yellowgreen)]()[![RxJS](https://img.shields.io/badge/RxJS-✓-brightgreen)]() [![Ngx Cookie Service](https://img.shields.io/badge/Ngx_Cookie_Service-✓-red)]()[![Ngx](https://img.shields.io/badge/Ngx%20Toastr-✓-red)]()
+[![Angular](https://img.shields.io/badge/Angular-✓-blue)]() [![Supabase](https://img.shields.io/badge/Supabase-✓-yellowgreen)]() [![TypeScript](https://img.shields.io/badge/TypeScript-✓-blue)]() [![News API](https://img.shields.io/badge/News_API-✓-yellowgreen)]() [![RxJS](https://img.shields.io/badge/RxJS-✓-brightgreen)]() [![Ngx Cookie Service](https://img.shields.io/badge/Ngx_Cookie_Service-✓-red)]() [![Ngx](https://img.shields.io/badge/Ngx%20Toastr-✓-red)]()
 
 ## Project Overview
 
