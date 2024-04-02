@@ -1,18 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CreateSafariComponent } from './create-safari.component';
+import { CreateEditSafariComponent } from './create-edit-safari.component';
 
 describe('CreateSafariComponent', () => {
-  let component: CreateSafariComponent;
-  let fixture: ComponentFixture<CreateSafariComponent>;
+  let component: CreateEditSafariComponent;
+  let fixture: ComponentFixture<CreateEditSafariComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CreateSafariComponent]
-    })
-    .compileComponents();
-    
-    fixture = TestBed.createComponent(CreateSafariComponent);
+      imports: [CreateEditSafariComponent],
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(CreateEditSafariComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

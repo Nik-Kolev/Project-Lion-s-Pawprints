@@ -1,9 +1,8 @@
-import { Day } from './../../services/safari.service';
 import {
   arrowAnimation,
   carouselAnimation,
   displaySafari,
-} from './../../animations';
+} from '../../animations';
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectorRef,
@@ -22,7 +21,7 @@ import {
 } from '@angular/forms';
 import { SupabaseService } from '../../services/supabase.service';
 import { SafariService } from '../../services/safari.service';
-import { delay, forkJoin, of, switchMap, concatMap, concat, map } from 'rxjs';
+import { delay, forkJoin, of, switchMap, concatMap } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { positiveNumber } from '../../validators/positiveNumber';
 import { ErrorsComponent } from '../../shared/errors/errors.component';
@@ -41,14 +40,14 @@ interface DayImageFile {
 }
 
 @Component({
-  selector: 'app-create-safari',
+  selector: 'app-create-edit-safari',
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule, ErrorsComponent],
-  templateUrl: './create-safari.component.html',
-  styleUrl: './create-safari.component.scss',
+  templateUrl: './create-edit-safari.component.html',
+  styleUrl: './create-edit-safari.component.scss',
   animations: [arrowAnimation, carouselAnimation, displaySafari],
 })
-export class CreateSafariComponent implements OnInit {
+export class CreateEditSafariComponent implements OnInit {
   @ViewChildren('dayElement') dayElements!: QueryList<ElementRef>;
 
   safariForm!: FormGroup;
