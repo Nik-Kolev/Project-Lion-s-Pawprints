@@ -151,34 +151,34 @@ ng serve
 
 ### Home
 
-**Navigation Bar** - Quick access to all sections of the platform.
-**Carousel** - A rotating selection of amazing images of nature.
-**Call to Action** - Encourages users to explore safari packages.
-**Top rated destinations** - Showcases the most popular safari destinations based on user reviews.
-**Latest Blog Posts** - Updates from the Safari Tales blog on travel tips, destination highlights, and conservation news.
+- **Navigation Bar:** Quick access to all sections of the platform.
+- **Carousel:** A rotating selection of amazing images of nature.
+- **Call to Action:** Encourages users to explore safari packages.
+- **Top Rated Destinations:** Showcases the most popular safari destinations based on user reviews.
+- **Latest Blog Posts:** Updates from the Safari Tales blog on travel tips, destination highlights, and conservation news.
 
 ### Safaris
 
-**Catalog** - Browse through a comprehensive list of available safaris.
+- **Catalog:** Browse through a comprehensive list of available safaris.
 
 ### Info & Contacts
 
-**Information about the company** - Background information on Safari Tales, including our mission and vision.
-**Contact information** - Direct lines of communication for inquiries, support, or feedback.
+- **Information About the Company:** Background information on Safari Tales, including our mission and vision.
+  - **Contact Information:** Direct lines of communication for inquiries, support, or feedback.
 
 ### Blog
 
-**Latest news for safaris in Africa** - Articles and updates on safari adventures, wildlife conservation efforts, and destination spotlights.
+- **Latest News for Safaris in Africa:** Articles and updates on safari adventures, wildlife conservation efforts, and destination spotlights.
 
 ### Create Safari
 
-**Admin ownership is required** - A dedicated section for administrators to add new safari offerings, update existing ones.
+- **Admin Ownership is Required:** A dedicated section for administrators to add new safari offerings, update existing ones.
 
 ### User Panel
 
-**Login** - Secure access for returning users.
-**Register** - New users can create an account.
-**Logout** - Safely end your session.
+- **Login:** Secure access for returning users.
+- **Register:** New users can create an account.
+- **Logout:** Safely end your session.
 
 ## License
 
