@@ -14,7 +14,7 @@ import { displaySafari } from '../../animations';
   animations: [displaySafari],
 })
 export class DisplaySafariComponent implements OnInit {
-  currentSafari: Safari | undefined;
+  currentSafari!: Safari;
 
   constructor(
     private safariService: SafariService,
