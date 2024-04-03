@@ -27,10 +27,14 @@ export class ErrorsComponent {
           `${this.controlName} must be at least ${this.control.errors['minlength'].requiredLength} characters.`
         );
       }
-      if (this.control.errors?.['pattern']) {
+      if (this.control.errors?.['patternEmail']) {
         controlErrors.push(
           `${this.controlName} is not valid. e.g. john.doe@gmail.com`
         );
+      }
+
+      if (this.control.errors?.['isValidTitle']) {
+        controlErrors.push('Example: 3 - Day Zanzibar to Tarangire, ...');
       }
 
       if (
@@ -43,6 +47,14 @@ export class ErrorsComponent {
             controlErrors.push(`Passwords do not match.`);
           }
         });
+      }
+
+      if (this.control.errors?.['notPositive']) {
+        controlErrors.push(`${this.controlName} should be a positive number.`);
+      }
+
+      if (this.control.errors?.['dateRangeInvalid']) {
+        controlErrors.push(`The end date can't be before the start date.`);
       }
     }
 
