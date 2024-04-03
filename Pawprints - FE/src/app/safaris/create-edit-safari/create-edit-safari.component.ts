@@ -30,6 +30,7 @@ import { scrollTo } from '../../shared/scrollTo';
 import { customTitleValidator } from '../../validators/title.validator';
 import { dateRangeValidator } from '../../validators/dateRange.validator';
 import { dataTrimmer } from '../../shared/trimmer';
+import { trimValidator } from '../../validators/trimmer.validator';
 
 interface ImageParams {
   event: any;
@@ -106,18 +107,18 @@ export class CreateEditSafariComponent implements OnInit {
     const dayFormGroup = this.fb.group({
       dayTitle: ['', [Validators.required]],
       descriptions: this.fb.array([
-        this.fb.control('', Validators.required),
+        this.fb.control('', [Validators.required, trimValidator()]),
         this.fb.control(''),
         this.fb.control(''),
         this.fb.control(''),
       ]),
-      mainDestination: ['', [Validators.required]],
-      hotelName: ['', [Validators.required]],
-      hotelLink: ['', [Validators.required]],
-      hotelType: ['', [Validators.required]],
-      hotelLocation: ['', [Validators.required]],
-      includedMeals: ['', [Validators.required]],
-      includedDrinks: ['', [Validators.required]],
+      mainDestination: ['', [Validators.required, trimValidator()]],
+      hotelName: ['', [Validators.required, trimValidator()]],
+      hotelLink: ['', [Validators.required, trimValidator()]],
+      hotelType: ['', [Validators.required, trimValidator()]],
+      hotelLocation: ['', [Validators.required, trimValidator()]],
+      includedMeals: ['', [Validators.required, trimValidator()]],
+      includedDrinks: ['', [Validators.required, trimValidator()]],
       dayImage: [''],
     });
 
@@ -165,7 +166,6 @@ export class CreateEditSafariComponent implements OnInit {
           },
         });
         this.headerSafariImage = safari.safariImage;
-
         safari.days.forEach((day) => {
           const emptyDescriptionsNeeded = Math.max(
             0,
@@ -238,7 +238,7 @@ export class CreateEditSafariComponent implements OnInit {
     }
   }
 
-  safariTag(title: string) {
+  safariTag(title: string): string {
     return title
       .split('-')
       .join('')
@@ -249,9 +249,9 @@ export class CreateEditSafariComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.safariForm.setValue(dataTrimmer(this.safariForm.value));
-    console.log(this.safariForm.value);
     this.safariForm.markAllAsTouched();
+
+    // this.safariForm.setValue(dataTrimmer(this.safariForm.value));
 
     if (this.safariForm.valid) {
       const headerImage = this.selectedSafariImage
@@ -304,14 +304,16 @@ export class CreateEditSafariComponent implements OnInit {
             }
           })
         )
+
         .subscribe({
           next: () => {
             if (this.isEditMode) {
               this.toastService.success('Safari successfully edited.');
+              this.router.navigate(['/safari/', this.safariId]);
             } else {
               this.toastService.success('Safari successfully created.');
+              this.router.navigate(['/catalogSafari']);
             }
-            this.router.navigate(['/catalogSafari']);
           },
           error: (err) => this.toastService.error(err),
         });

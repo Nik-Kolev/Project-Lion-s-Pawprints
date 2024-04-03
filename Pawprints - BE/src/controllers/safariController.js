@@ -62,7 +62,7 @@ safariController.get("/fetchCatalogSafaris", async (req, res) => {
       res.status(200).send(data);
     }, 1000);
   } catch (error) {
-    res.status(500).send("error fetching safaris");
+    res.status(500).send(error);
     errorHandler(error);
   }
 });
@@ -71,9 +71,20 @@ safariController.get("/fetchSafariById/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const safari = await safariModel.findOne({ _id: id });
+    console.log(safari);
     res.status(200).send(safari);
   } catch (error) {
-    res.status(500).send(`Error fetching safari with id: ${id}.`);
+    res.status(500).send(error);
+    errorHandler(error);
+  }
+});
+
+safariController.get("/fetchSafariByRating", async (req, res) => {
+  try {
+    const safaris = await safariModel.find().sort({ rating: -1 }).limit(5);
+    res.status(200).send(safaris);
+  } catch (error) {
+    res.status(500).send(error);
     errorHandler(error);
   }
 });

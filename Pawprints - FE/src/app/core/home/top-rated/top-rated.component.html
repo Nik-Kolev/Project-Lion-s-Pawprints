@@ -3,55 +3,55 @@
   <div class="table">
     <aside class="table__safaris">
       <ul class="table__list">
-        <li class="table__item">
-          <p>#1</p>
-          <a class="link">Tanzania</a>
+        @for (safari of safariList; track $index) {
+        <li
+          class="table__item table__item--active"
+          [class.table__item--active]="$index === activeSafariIndex"
+          (click)="setActiveSafari($index)"
+        >
+          <p>#{{ $index + 1 }}</p>
+          <a class="link">{{ safariTag(safari.safariTitle) }}</a>
         </li>
-        <li class="table__item table__item--active">
-          <p>#2</p>
-          <a class="link">Tanzania</a>
-        </li>
-        <li class="table__item">
-          <p>#3</p>
-          <a class="link">Tanzania</a>
-        </li>
-        <li class="table__item">
-          <p>#4</p>
-          <a class="link">Tanzania</a>
-        </li>
-        <li class="table__item">
-          <p>#5</p>
-          <a class="link">Tanzania</a>
-        </li>
+        }
       </ul>
     </aside>
 
+    @if (activeSafariIndex !== null) {
     <div class="table__container">
       <div class="table__top">
-        <a href="#" class="table__destination">Tanzania</a>
+        <a
+          routerLink="/safari/{{ safariList[activeSafariIndex]._id }}"
+          class="table__destination"
+          >{{ safariList[activeSafariIndex].safariTitle }}</a
+        >
         <div class="table__rating">
           <p>
-            <span class="table__rating--span">4.8</span> / 5
+            <span class="table__rating--span">{{
+              safariList[activeSafariIndex].rating
+            }}</span>
+            / 5
             <i class="fa-solid fa-star"></i>
           </p>
           <a href="#" class="table__reviews">10 reviews</a>
         </div>
       </div>
-      <p class="table__out-of">#1 of 5 Major Safaris</p>
+      <p class="table__out-of">
+        #{{ activeSafariIndex + 1 }} of 5 best reviewed safaris
+      </p>
       <p class="table__country-info">
-        Tanzania, with its three safari circuits, is one of Africa’s top
-        wildlife destinations. The popular Northern circuit incorporates
-        bucket-list landmarks such as Serengeti National Park, Ngorongoro Crater
-        and Mt Kilimanjaro. Repeat visitors might prefer the remote wilderness
-        vibe of the Southern or Western circuits. For some beach time, the
-        ‘Spice Island’ of Zanzibar is only a short flight away. About Tanzania
+        {{ safariList[activeSafariIndex].days[0].descriptions[0] }}
       </p>
       <div class="table__bottom">
         <div>
           <i class="fa-solid fa-sack-dollar"></i>
           <div class="table__pricing">
             <p>Rates (USD)</p>
-            <p>$220 to $607 pp/day</p>
+            <p>
+              ${{ safariList[activeSafariIndex].rates.twoPeopleOneRoom }} to ${{
+                safariList[activeSafariIndex].rates.sixPeopleThreeRooms
+              }}
+              pp/day
+            </p>
           </div>
         </div>
         <div>
@@ -73,9 +73,12 @@
           </div>
         </div>
       </div>
-      <a href="#" class="table__button"
-        >55 Tanzania Safaris <i class="fa-solid fa-angles-right"></i
+      <a
+        routerLink="/safari/{{ safariList[activeSafariIndex]._id }}"
+        class="table__button"
+        >Click for more information <i class="fa-solid fa-angles-right"></i
       ></a>
     </div>
+    }
   </div>
 </section>

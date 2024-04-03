@@ -151,7 +151,6 @@
           type="file"
           class="form__input safariForm__upload--input"
           id="imageUrl"
-          required
           formControlName="safariImage"
           (change)="onImagePreview({ event: $event, type: 'headerImage' })"
         />
@@ -362,7 +361,6 @@
                 type="file"
                 class="form__input safariForm__upload--input safariForm__upload--inputDay"
                 id="dayImage-{{ i }}"
-                required
                 formControlName="dayImage"
                 (change)="
                   onImagePreview({
@@ -403,7 +401,6 @@
         </div>
       </div>
     </div>
-    <!-- </div> -->
     <div class="buttons">
       <button type="button" class="day-grid__btn" (click)="addDay()">
         Add Another Day

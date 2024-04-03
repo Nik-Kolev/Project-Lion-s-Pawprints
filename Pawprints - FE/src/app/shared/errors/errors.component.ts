@@ -56,6 +56,10 @@ export class ErrorsComponent {
       if (this.control.errors?.['dateRangeInvalid']) {
         controlErrors.push(`The end date can't be before the start date.`);
       }
+
+      if (this.control.errors?.['requiredTrimmed']) {
+        controlErrors.push(`${this.controlName} shouldnt be empty spaces.`);
+      }
     }
 
     return controlErrors;

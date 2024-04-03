@@ -2,14 +2,14 @@
   <header class="header">
     <div class="header__img-container">
       <img
-        src="{{ currentSafari.safariImage }}"
+        src="{{ currentSafari?.safariImage }}"
         alt="Nyerere_National_Park_011"
       />
     </div>
-    <h2 class="header__h2">{{ currentSafari.safariTitle }}</h2>
+    <h2 class="header__h2">{{ currentSafari?.safariTitle }}</h2>
   </header>
   <div class="border-container">
-    @for (day of currentSafari.days; track $index) {
+    @for (day of currentSafari?.days; track $index) {
     <div class="day">
       <div class="day__info-container">
         <div class="day__header-container">
@@ -112,8 +112,8 @@
           </div>
           <div class="prices__cell prices__cell--first">
             <span>
-              {{ currentSafari.period.from | date }} -
-              {{ currentSafari.period.to | date }}
+              {{ currentSafari?.period?.from | date }} -
+              {{ currentSafari?.period?.to | date }}
             </span>
           </div>
         </div>
@@ -130,7 +130,7 @@
             <span class="prices__light"> 1 room</span>
           </div>
           <div class="prices__cell">
-            ${{ currentSafari.rates.twoPeopleOneRoom }}
+            ${{ currentSafari?.rates?.twoPeopleOneRoom }}
           </div>
         </div>
         <div class="prices__column">
@@ -139,7 +139,7 @@
             <span class="prices__light"> 2 rooms</span>
           </div>
           <div class="prices__cell">
-            ${{ currentSafari.rates.threePeopleTwoRooms }}
+            ${{ currentSafari?.rates?.threePeopleTwoRooms }}
           </div>
         </div>
         <div class="prices__column">
@@ -148,7 +148,7 @@
             <span class="prices__light"> 2 rooms</span>
           </div>
           <div class="prices__cell">
-            ${{ currentSafari.rates.fourPeopleTwoRooms }}
+            ${{ currentSafari?.rates?.fourPeopleTwoRooms }}
           </div>
         </div>
         <div class="prices__column">
@@ -157,7 +157,7 @@
             <span class="prices__light"> 3 rooms</span>
           </div>
           <div class="prices__cell">
-            ${{ currentSafari.rates.fivePeopleThreeRooms }}
+            ${{ currentSafari?.rates?.fivePeopleThreeRooms }}
           </div>
         </div>
         <div class="prices__column">
@@ -166,7 +166,7 @@
             <span class="prices__light"> 3 rooms</span>
           </div>
           <div class="prices__cell">
-            ${{ currentSafari.rates.sixPeopleThreeRooms }}
+            ${{ currentSafari?.rates?.sixPeopleThreeRooms }}
           </div>
         </div>
         <div class="prices__column">
@@ -181,7 +181,7 @@
     <div class="prices__table--info">
       *n/a = not available. This tour is unavailable for solo travelers.
     </div>
-    @if (user?.admin && currentSafari.owner == user?._id) {
+    @if (user?.admin && currentSafari?.owner == user?._id) {
     <div class="admin__btn">
       <a class="btn" (click)="editSafari()">Edit Safari</a>
       <a class="btn" (click)="deleteSafari()">Delete Safari</a>

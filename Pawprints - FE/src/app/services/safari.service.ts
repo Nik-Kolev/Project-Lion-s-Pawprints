@@ -27,6 +27,7 @@ export interface Safari {
     fivePeopleThreeRooms: string;
     sixPeopleThreeRooms: string;
   };
+  rating?: string;
 }
 
 export interface Day {
@@ -71,6 +72,10 @@ export class SafariService {
     return this.http.get<Safari>(
       `${apiURL}/safari/fetchSafariById/${safariId}`
     );
+  }
+
+  fetchSafariByRating() {
+    return this.http.get<Safari[]>(`${apiURL}/safari/fetchSafariByRating`);
   }
 
   deleteSafari(safariId: string | undefined) {

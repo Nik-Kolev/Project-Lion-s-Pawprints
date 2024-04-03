@@ -49,8 +49,6 @@ export class CatalogSafariComponent implements OnInit {
       next: (data: SafariCatalog) => {
         this.safariList = data.safaris;
         this.totalPages = data.totalNumberOfPages;
-        console.log(data.currentPage);
-        console.log(this.currentPage);
         this.currentPage = data.currentPage;
 
         this.router.navigate([], {

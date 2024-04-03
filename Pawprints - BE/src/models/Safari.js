@@ -36,6 +36,9 @@ const safariSchema = new mongoose.Schema({
     fivePeopleThreeRooms: { type: String },
     sixPeopleThreeRooms: { type: String },
   },
+  rating: {
+    type: String,
+  },
 });
 
 const Safari = mongoose.model("Safari", safariSchema);
