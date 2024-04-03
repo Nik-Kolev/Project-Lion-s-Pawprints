@@ -27,6 +27,9 @@ import { positiveNumber } from '../../validators/positiveNumber';
 import { ErrorsComponent } from '../../shared/errors/errors.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { scrollTo } from '../../shared/scrollTo';
+import { customTitleValidator } from '../../validators/title.validator';
+import { dateRangeValidator } from '../../validators/dateRange.validator';
+import { dataTrimmer } from '../../shared/trimmer';
 
 interface ImageParams {
   event: any;
@@ -70,20 +73,22 @@ export class CreateEditSafariComponent implements OnInit {
     private cd: ChangeDetectorRef
   ) {
     this.safariForm = this.fb.group({
-      safariTitle: [''],
+      safariTitle: ['', [Validators.required, customTitleValidator()]],
       safariImage: [''],
       days: this.fb.array([]),
-      period: this.fb.group({
-        from: [''],
-        to: [''],
-      }),
+      period: this.fb.group(
+        {
+          from: ['', [Validators.required]],
+          to: ['', [Validators.required]],
+        },
+        { validators: dateRangeValidator() }
+      ),
       rates: this.fb.group({
-        // twoPeopleOneRoom: ['', [Validators.required, positiveNumber()]],
-        twoPeopleOneRoom: [''],
-        threePeopleTwoRooms: [''],
-        fourPeopleTwoRooms: [''],
-        fivePeopleThreeRooms: [''],
-        sixPeopleThreeRooms: [''],
+        twoPeopleOneRoom: ['', [Validators.required, positiveNumber()]],
+        threePeopleTwoRooms: ['', [Validators.required, positiveNumber()]],
+        fourPeopleTwoRooms: ['', [Validators.required, positiveNumber()]],
+        fivePeopleThreeRooms: ['', [Validators.required, positiveNumber()]],
+        sixPeopleThreeRooms: ['', [Validators.required, positiveNumber()]],
       }),
     });
   }
@@ -93,25 +98,26 @@ export class CreateEditSafariComponent implements OnInit {
   }
 
   getDescriptions(dayIndex: number): FormArray {
-    return this.days.at(dayIndex).get('descriptions') as FormArray;
+    // return this.days.at(dayIndex).get('descriptions') as FormArray;
+    return this.safariForm.get(['days', dayIndex, 'descriptions']) as FormArray;
   }
 
   addDay(): void {
     const dayFormGroup = this.fb.group({
-      dayTitle: [''],
+      dayTitle: ['', [Validators.required]],
       descriptions: this.fb.array([
-        this.fb.control(''),
+        this.fb.control('', Validators.required),
         this.fb.control(''),
         this.fb.control(''),
         this.fb.control(''),
       ]),
-      mainDestination: [''],
-      hotelName: [''],
-      hotelLink: [''],
-      hotelType: [''],
-      hotelLocation: [''],
-      includedMeals: [''],
-      includedDrinks: [''],
+      mainDestination: ['', [Validators.required]],
+      hotelName: ['', [Validators.required]],
+      hotelLink: ['', [Validators.required]],
+      hotelType: ['', [Validators.required]],
+      hotelLocation: ['', [Validators.required]],
+      includedMeals: ['', [Validators.required]],
+      includedDrinks: ['', [Validators.required]],
       dayImage: [''],
     });
 
@@ -169,8 +175,11 @@ export class CreateEditSafariComponent implements OnInit {
             Array(emptyDescriptionsNeeded).fill('')
           );
           const descriptionsFormArray = this.fb.array(
-            descriptions.map((description) =>
-              this.fb.control(description, Validators.required)
+            descriptions.map((description, index) =>
+              this.fb.control(
+                description,
+                index === 0 ? Validators.required : null
+              )
             )
           );
           const dayGroup = this.fb.group({
@@ -219,7 +228,6 @@ export class CreateEditSafariComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // window.scrollTo({ top: 0 });
     this.safariId = this.activeRoute.snapshot.paramMap.get('safariId');
     if (this.safariId) {
       this.isEditMode = true;
@@ -241,70 +249,72 @@ export class CreateEditSafariComponent implements OnInit {
   }
 
   onSubmit(): void {
-    // if (!this.safariForm.invalid) {
-    //   console.log(this.safariForm.value);
-    //   return;
-    // } else {
-    console.log(this.safariForm.valid);
-    const headerImage = this.selectedSafariImage
-      ? this.supabase.supabaseUploader(
-          this.selectedSafariImage,
-          this.safariTag(this.safariForm.value.safariTitle)
-        )
-      : of(this.headerSafariImage);
+    this.safariForm.setValue(dataTrimmer(this.safariForm.value));
+    console.log(this.safariForm.value);
+    this.safariForm.markAllAsTouched();
 
-    headerImage
-      .pipe(
-        switchMap((uploadSafariImage) => {
-          this.safariForm.value.safariImage = uploadSafariImage;
+    if (this.safariForm.valid) {
+      const headerImage = this.selectedSafariImage
+        ? this.supabase.supabaseUploader(
+            this.selectedSafariImage,
+            this.safariTag(this.safariForm.value.safariTitle)
+          )
+        : of(this.headerSafariImage);
 
-          if (this.selectedDayImages.length > 0) {
-            const uploadDayImages = this.selectedDayImages.map((dayImageFile) =>
-              of(dayImageFile).pipe(
-                delay(1500),
-                concatMap((file) =>
-                  this.supabase.supabaseUploader(
-                    file.file,
-                    this.safariTag(this.safariForm.value.safariTitle)
-                  )
-                )
-              )
-            );
-            return forkJoin(uploadDayImages).pipe(
-              switchMap((response) => {
-                response.forEach((uploadedImageUrl, i) => {
-                  const dayIndex = this.selectedDayImages[i].dayIndex;
-                  this.safariForm.value.days[dayIndex].dayImage =
-                    uploadedImageUrl;
-                });
-                return this.isEditMode
-                  ? this.safariService.updateSafari(
-                      this.safariId,
-                      this.safariForm.value
+      headerImage
+        .pipe(
+          switchMap((uploadSafariImage) => {
+            this.safariForm.value.safariImage = uploadSafariImage;
+
+            if (this.selectedDayImages.length > 0) {
+              const uploadDayImages = this.selectedDayImages.map(
+                (dayImageFile) =>
+                  of(dayImageFile).pipe(
+                    delay(1500),
+                    concatMap((file) =>
+                      this.supabase.supabaseUploader(
+                        file.file,
+                        this.safariTag(this.safariForm.value.safariTitle)
+                      )
                     )
-                  : this.safariService.createSafari(this.safariForm.value);
-              })
-            );
-          } else {
-            return this.isEditMode
-              ? this.safariService.updateSafari(
-                  this.safariId,
-                  this.safariForm.value
-                )
-              : this.safariService.createSafari(this.safariForm.value);
-          }
-        })
-      )
-      .subscribe({
-        next: () => {
-          if (this.isEditMode) {
-            this.toastService.success('Safari successfully edited.');
-          } else {
-            this.toastService.success('Safari successfully created.');
-          }
-          this.router.navigate(['/catalogSafari']);
-        },
-        error: (err) => this.toastService.error(err),
-      });
+                  )
+              );
+              return forkJoin(uploadDayImages).pipe(
+                switchMap((response) => {
+                  response.forEach((uploadedImageUrl, i) => {
+                    const dayIndex = this.selectedDayImages[i].dayIndex;
+                    this.safariForm.value.days[dayIndex].dayImage =
+                      uploadedImageUrl;
+                  });
+                  return this.isEditMode
+                    ? this.safariService.updateSafari(
+                        this.safariId,
+                        this.safariForm.value
+                      )
+                    : this.safariService.createSafari(this.safariForm.value);
+                })
+              );
+            } else {
+              return this.isEditMode
+                ? this.safariService.updateSafari(
+                    this.safariId,
+                    this.safariForm.value
+                  )
+                : this.safariService.createSafari(this.safariForm.value);
+            }
+          })
+        )
+        .subscribe({
+          next: () => {
+            if (this.isEditMode) {
+              this.toastService.success('Safari successfully edited.');
+            } else {
+              this.toastService.success('Safari successfully created.');
+            }
+            this.router.navigate(['/catalogSafari']);
+          },
+          error: (err) => this.toastService.error(err),
+        });
+    }
   }
 }

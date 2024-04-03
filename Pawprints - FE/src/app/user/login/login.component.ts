@@ -6,7 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { emailValidator } from '../../validators/email.validator';
+import { emailPatternValidator } from '../../validators/email.validator';
 import { dataTrimmer } from '../../shared/trimmer';
 import { AuthService } from '../../services/auth.service';
 import { ToastrService } from 'ngx-toastr';
@@ -32,19 +32,17 @@ export class LoginComponent {
   ) {
     this.loginForm = this.fb.group({
       email: new FormControl('', [
-        emailValidator.required,
-        emailValidator.isValidEmail,
+        Validators.required,
+        emailPatternValidator(),
       ]),
       password: ['', [Validators.required, Validators.minLength(5)]],
     });
   }
 
   onSubmit(): void {
+    this.loginForm.setValue(dataTrimmer(this.loginForm.value));
+
     this.loginForm.markAllAsTouched();
-
-    const trimmedValues = dataTrimmer(this.loginForm.value);
-    this.loginForm.setValue(trimmedValues, { emitEvent: true });
-
     if (!this.loginForm.valid) {
       return;
     } else {

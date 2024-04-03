@@ -6,7 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { emailValidator } from '../../validators/email.validator';
+import { emailPatternValidator } from '../../validators/email.validator';
 import { rePassChecker } from '../../validators/rePass.validator';
 import { dataTrimmer } from '../../shared/trimmer';
 import { AuthService } from '../../services/auth.service';
@@ -32,8 +32,8 @@ export class RegisterComponent {
   ) {
     this.registerForm = this.fb.group({
       email: new FormControl('', [
-        emailValidator.required,
-        emailValidator.isValidEmail,
+        Validators.required,
+        emailPatternValidator(),
       ]),
       passGroup: this.fb.group(
         {
@@ -48,14 +48,10 @@ export class RegisterComponent {
   }
 
   onSubmit(): void {
+    this.registerForm.setValue(dataTrimmer(this.registerForm.value));
+
     this.registerForm.markAllAsTouched();
-
-    const trimmedData = dataTrimmer(this.registerForm.value);
-    this.registerForm.setValue(trimmedData, { emitEvent: false });
-
-    if (!this.registerForm.valid) {
-      return;
-    } else {
+    if (this.registerForm.valid) {
       this.auth
         .register(
           this.registerForm.value.email,

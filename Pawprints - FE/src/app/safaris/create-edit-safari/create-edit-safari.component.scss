@@ -136,7 +136,7 @@
     font-size: 1.5rem;
     font-family: inherit;
     padding: 1.5rem 2rem;
-    margin-bottom: 2rem;
+    margin-bottom: 0.5rem;
     border-radius: 2px;
     color: inherit;
     background-color: var(--color-grey-light-2);
@@ -198,4 +198,29 @@
   &:active {
     transform: translateY(2px);
   }
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.error-div {
+  margin-bottom: 1rem;
+  min-height: 2rem;
+}
+
+.last {
+  min-height: 4rem;
+}
+
+.img-helper {
+  margin-top: 1rem;
+  font-size: 1.6rem;
+}
+
+.error-div-helper {
+  font-size: 1.4rem;
+  color: red;
 }

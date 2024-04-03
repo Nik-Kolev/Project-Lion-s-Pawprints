@@ -14,8 +14,10 @@
             formControlName="safariTitle"
           />
         </div>
-
-        <div class="form__group" formGroupName="period">
+        <div class="error-div">
+          <app-errors [control]="safariForm.get(['safariTitle'])"></app-errors>
+        </div>
+        <div class="form__group form__group-period" formGroupName="period">
           <label for="periodFrom" class="form__label"
             >Active Price From :</label
           >
@@ -27,8 +29,12 @@
             formControlName="from"
           />
         </div>
-
-        <div class="form__group" formGroupName="period">
+        <div class="error-div">
+          <app-errors
+            [control]="safariForm.get(['period', 'from'])"
+          ></app-errors>
+        </div>
+        <div class="form__group form__group-period" formGroupName="period">
           <label for="periodTo" class="form__label">Active Price To :</label>
           <input
             type="date"
@@ -37,6 +43,10 @@
             required
             formControlName="to"
           />
+        </div>
+        <div class="error-div">
+          <app-errors [control]="safariForm.get(['period'])"></app-errors>
+          <app-errors [control]="safariForm.get(['period', 'to'])"></app-errors>
         </div>
       </div>
 
@@ -48,7 +58,7 @@
               >Two People - One Room :</label
             >
             <input
-              type="text"
+              type="number"
               class="form__input"
               placeholder="e.g. $120"
               id="twoPeopleOneRoom"
@@ -67,55 +77,72 @@
               >Three People - Two Rooms :</label
             >
             <input
-              type="text"
+              type="number"
               class="form__input"
-              placeholder="e.g. $120"
+              placeholder="e.g. $110"
               id="threePeopleTwoRooms"
               required
               formControlName="threePeopleTwoRooms"
             />
           </div>
-
+          <div class="error-div">
+            <app-errors
+              [control]="safariForm.get(['rates', 'threePeopleTwoRooms'])"
+            ></app-errors>
+          </div>
           <div class="form__group">
             <label for="fourPeopleTwoRooms" class="form__label"
               >Four People - Two Rooms :</label
             >
             <input
-              type="text"
+              type="number"
               class="form__input"
-              placeholder="e.g. $120"
+              placeholder="e.g. $100"
               id="fourPeopleTwoRooms"
               required
               formControlName="fourPeopleTwoRooms"
             />
           </div>
-
+          <div class="error-div">
+            <app-errors
+              [control]="safariForm.get(['rates', 'fourPeopleTwoRooms'])"
+            ></app-errors>
+          </div>
           <div class="form__group">
             <label for="fivePeopleThreeRooms" class="form__label"
               >Five People - Three Rooms :</label
             >
             <input
-              type="text"
+              type="number"
               class="form__input"
-              placeholder="e.g. $120"
+              placeholder="e.g. $90"
               id="fivePeopleThreeRooms"
               required
               formControlName="fivePeopleThreeRooms"
             />
           </div>
-
+          <div class="error-div">
+            <app-errors
+              [control]="safariForm.get(['rates', 'fivePeopleThreeRooms'])"
+            ></app-errors>
+          </div>
           <div class="form__group">
             <label for="sixPeopleThreeRooms" class="form__label"
               >Six People - Three Rooms :</label
             >
             <input
-              type="text"
+              type="number"
               class="form__input"
-              placeholder="e.g. $120"
+              placeholder="e.g. $80"
               id="sixPeopleThreeRooms"
               required
               formControlName="sixPeopleThreeRooms"
             />
+          </div>
+          <div class="error-div">
+            <app-errors
+              [control]="safariForm.get(['rates', 'sixPeopleThreeRooms'])"
+            ></app-errors>
           </div>
         </div>
       </div>
@@ -135,6 +162,7 @@
         <div>
           <img [src]="headerSafariImage" class="safariForm__img--preview" />
         </div>
+        <div class="img-helper">*Image is required</div>
       </div>
     </div>
 
@@ -170,6 +198,11 @@
                 formControlName="dayTitle"
               />
             </div>
+            <div class="error-div">
+              <app-errors
+                [control]="safariForm.get(['days', i, 'dayTitle'])"
+              ></app-errors>
+            </div>
             <div formArrayName="descriptions">
               <div
                 *ngFor="
@@ -189,6 +222,11 @@
                     [formControlName]="j"
                   />
                 </div>
+                <div class="error-div">
+                  <app-errors
+                    [control]="safariForm.get(['days', i, 'descriptions', j])"
+                  ></app-errors>
+                </div>
               </div>
             </div>
             <div class="form__group">
@@ -203,6 +241,11 @@
                 required
                 formControlName="mainDestination"
               />
+            </div>
+            <div class="error-div">
+              <app-errors
+                [control]="safariForm.get(['days', i, 'mainDestination'])"
+              ></app-errors>
             </div>
           </div>
           <div>
@@ -219,6 +262,11 @@
                   placeholder="e.g. Ngorongoro Lodge"
                 />
               </div>
+              <div class="error-div">
+                <app-errors
+                  [control]="safariForm.get(['days', i, 'hotelName'])"
+                ></app-errors>
+              </div>
               <div class="form__group">
                 <label for="accommodationType-{{ i }}" class="form__label"
                   >Hotel Type :</label
@@ -231,7 +279,11 @@
                   placeholder="Luxury lodge"
                 />
               </div>
-
+              <div class="error-div">
+                <app-errors
+                  [control]="safariForm.get(['days', i, 'hotelType'])"
+                ></app-errors>
+              </div>
               <div class="form__group">
                 <label for="accommodationLocation-{{ i }}" class="form__label"
                   >Hotel Location :</label
@@ -244,6 +296,11 @@
                   placeholder="crater rim of Ngorongoro Crater"
                 />
               </div>
+              <div class="error-div">
+                <app-errors
+                  [control]="safariForm.get(['days', i, 'hotelLocation'])"
+                ></app-errors>
+              </div>
               <div class="form__group">
                 <label for="accommodationLink-{{ i }}" class="form__label"
                   >Hotel Link :</label
@@ -255,6 +312,11 @@
                   formControlName="hotelLink"
                   placeholder="https://www.serenahotels.com/ngorongoro"
                 />
+                <div class="error-div">
+                  <app-errors
+                    [control]="safariForm.get(['days', i, 'hotelLink'])"
+                  ></app-errors>
+                </div>
               </div>
             </div>
             <div>
@@ -270,6 +332,11 @@
                   placeholder="All meals included"
                 />
               </div>
+              <div class="error-div">
+                <app-errors
+                  [control]="safariForm.get(['days', i, 'includedMeals'])"
+                ></app-errors>
+              </div>
               <div class="form__group">
                 <label for="drinksIncluded-{{ i }}" class="form__label"
                   >Included Drinks :</label
@@ -281,6 +348,11 @@
                   formControlName="includedDrinks"
                   placeholder="Drinking water & beer and wine"
                 />
+                <div class="error-div">
+                  <app-errors
+                    [control]="safariForm.get(['days', i, 'includedDrinks'])"
+                  ></app-errors>
+                </div>
               </div>
             </div>
           </div>
@@ -317,6 +389,7 @@
                 />
                 }
               </div>
+              <div class="img-helper">*Image is required</div>
             </div>
             <button
               type="button"
