@@ -17,7 +17,10 @@ export const appInterceptor: HttpInterceptorFn = (req, next) => {
     });
   }
 
-  if (req.url.startsWith(`${environment.apiURL}/safari/`)) {
+  if (
+    req.url.startsWith(`${environment.apiURL}/safari/`) ||
+    router.url === '/blog'
+  ) {
     spinnerService.changeLoadingState(true);
   }
 
